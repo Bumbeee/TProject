@@ -9,6 +9,6 @@
 •	[Miro](https://miro.com/app/board/o9J_kvVIfC0=/)
 # Документация
 •	[ТЗ docx](https://github.com/Bumbeee/TProject/blob/master/documents/TZ.docx) <br>
-•	[ТЗ pdf](https://github.com/Bumbeee/TProject/blob/master/documents/TZ.pdf)
+•	[ТЗ pdf](https://github.com/Bumbeee/TProject/blob/master/documents/TZ.pdf) <br>
 •	[Курсовая doc](https://github.com/Bumbeee/TProject/blob/master/documents/Курсовая.doc) <br>
 •	[Курсовая pdf](https://github.com/Bumbeee/TProject/blob/master/documents/Курсовая.pdf)

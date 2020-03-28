@@ -16,7 +16,6 @@
   function user_data_edit($connection, $id = null)
   {
     $query = mysqli_query($connection, "UPDATE users SET name = '$name', surname = '$surname',
-							email = '$email', sex = '$sex', birth_date = '$birth_date', city = '$city'
-              WHERE id = '$id'");
+      email = '$email', sex = '$sex', birth_date = '$birth_date', city = '$city' WHERE id = '$id'");
   }
  ?>

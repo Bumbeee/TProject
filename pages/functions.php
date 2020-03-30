@@ -48,7 +48,7 @@
     while ($cat = mysqli_fetch_assoc($query))
     {
       echo "<table>
-      <tr><td>Имя</td><td>$cat[users_name]</td></tr>
+      <tr><td>Имя</td><td>$cat[groups_name]</td></tr>
       <tr><td>Опыт</td><td>$cat[groups_experience]</td></tr>
       <tr><td>Инструмент</td><td>$cat[instruments_name]</td></tr>
       <tr><td>Жанр</td><td>$cat[genres_name]</td></tr>

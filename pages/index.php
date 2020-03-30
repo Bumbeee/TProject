@@ -1,5 +1,6 @@
 ﻿<?php
 	require "db.php";
 	require "functions.php";
-	user_data_output($connection, 1);
 ?>
+
+<a href="account.php">Личный кабинет</a>

@@ -59,4 +59,27 @@
     }
 		echo"</table>";
   }
+
+  musicians_request($connection, $users_id = null, $musicians_creator = null,
+  $musicians_experience = null, $musicians_instrument = null, $musicians_genre = null,
+  $musicians_description = null, $musicians_isvip = null)
+  {
+    //mysqli_query($connection, 'SET foreign_key_checks = 0');
+    $query = mysqli_query($connection, "INSERT INTO musicians (musicians_creator,
+    musicians_experience, musicians_instrument, musicians_genre, musicians_description,
+    musicians_isvip) VALUES ('$musicians_creator'.'$musicians_experience', '$musicians_instrument',
+    '$musicians_genre', '$musicians_description', '$musicians_isvip')");
+  }
+
+  groups_request($connection, $users_id = null, $groups_name = null, $groups_instrument = null,
+  $groups_experience = null, $groups_genre = null, $groups_description = null, $groups_isvip = null,
+  $groups_creator = null, $groups_sex = null, $groups_city = null, $groups_age = null)
+  {
+    //mysqli_query($connection, 'SET foreign_key_checks = 0');
+    $query = mysqli_query($connection, "INSERT INTO groups (groups_name, groups_instrument,
+    groups_experience, groups_genre, groups_description, groups_isvip, groups_creator, groups_sex,
+    groups_city, groups_age) VALUES ('$groups_name'.'$groups_instrument', '$groups_experience',
+    '$groups_genre', '$groups_description', '$groups_isvip', '$groups_creator', '$groups_sex',
+    '$groups_city', '$groups_age')");
+  }
  ?>

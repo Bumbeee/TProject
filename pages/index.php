@@ -5,3 +5,4 @@
 
 <a href="account.php">Личный кабинет</a>
 <a href="registration.php">Регистрация</a>
+<a href="auth.php">Авторизация</a>

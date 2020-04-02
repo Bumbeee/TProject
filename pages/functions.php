@@ -49,6 +49,38 @@ function do_register($arr, $link){
     'city' => $city,
     ];
 }
+function do_auth($connection, $arr){
+  if(isset($arr["do_login"])){
+  	if(empty($arr['email'])|| empty($arr['password'])){
+  			$message = "Пожалуйста, заполните все поля!";
+  		}
+  	else{
+  		$email = $arr['email'];
+  		$password = $arr['password'];
+  		$query = mysqli_query($connection, "SELECT * FROM users WHERE users_email = '$email'");
+  		if(mysqli_num_rows($query) == 0){
+  			$message = "Неверный логин или пароль!";
+  		}
+  		else {
+  			$query = mysqli_query($connection, "SELECT users_password FROM users WHERE users_email = '$email' LIMIT 1");
+  			$array = mysqli_fetch_array($query);
+  			$hash = $array['users_password'];
+  			if(password_verify($password, $hash)){
+  				$_SESSION['logged_user'] = $email;
+  				header("Location: ../");
+  					exit();
+  			}
+  			else {
+  				$message = "Неверный логин или пароль";
+  			}
+  		}
+  	}
+  }
+  return [
+    'message' => $message,
+    'email' => $email,
+];
+}
 function user_data_output($connection, $users_id = null)
 {
   $query = mysqli_query($connection, "SELECT * FROM users WHERE users_id = $users_id");

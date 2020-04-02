@@ -5,7 +5,7 @@
   ?>
 <!DOCTYPE html>
 <head>
-
+  <link rel="stylesheet" href="../css/">
 </head>
 
 <title>Believe - Регистрация</title>

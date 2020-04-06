@@ -160,4 +160,51 @@ $groups_creator = null, $groups_sex = null, $groups_city = null, $groups_age = n
   '$groups_genre', '$groups_description', '$groups_isvip', '$groups_creator', '$groups_sex',
   '$groups_city', '$groups_age')");
 }
+function generate_code($seed){
+    $key = md5($seed);
+    $new_key = '';
+    for($i=1; $i <= 16; $i ++ ){
+              $new_key .= $key[$i];
+              if ( $i%4==0 && $i != 16) $new_key.='-';
+    }
+ return strtoupper($new_key);
+ }
+ function isInArr($arr, $item){
+   foreach($arr as &$value){
+     if($value == $item)
+       return true;
+   }
+   return false;
+ }
+ function generate_codes($count){
+   $array = [];
+   for($i = 1; $i <= $count; $i++){
+     $code = generate_code($i * time());
+     if(!isInArr($array, $code))
+     array_push($array, $code);
+   }
+   return $array;
+ }
+ function print_array($arr){
+   foreach($arr as &$value){
+   echo $value;
+   echo '</br>';
+   }
+ }
+ function get_vips($connection, $count){
+ $fd = fopen("../vip_codes.txt", 'w') or die("Не удалось открыть файл");
+ $arr = generate_codes($count);
+ foreach($arr as &$value){
+   $query = mysqli_query($connection, "SELECT * FROM vip WHERE vip_code = '$value'");
+   if(mysqli_num_rows($query) == 0){
+     $result = mysqli_query($connection,
+     "INSERT INTO vip (vip_code) VALUES('$value')");
+     if($result == TRUE) {
+       $item = "$value" . "\n";
+       fwrite($fd, $item);
+     }
+   }
+ }
+ fclose($fd);
+}
 ?>

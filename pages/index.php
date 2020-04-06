@@ -16,9 +16,9 @@
 
 	if(isset($arr['status'])){
 		if($arr['status'] == FALSE)
-			echo "TRUE";
-		if($arr['status'] == TRUE)
 			echo "FALSE";
+		if($arr['status'] == TRUE)
+			echo "TRUE";
 	}
 ?>
 

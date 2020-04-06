@@ -1,5 +1,5 @@
 <?php
-function do_register($arr, $link){
+function do_register($connection, $arr){
   if(isset($arr["do_submit"])){
   	if(empty($arr['name']) || empty($arr['surname'])  || empty($arr['gender'] || empty($arr['city']))
   		|| empty($arr['password']) || empty($arr['repassword'])){
@@ -14,7 +14,7 @@ function do_register($arr, $link){
       $date = $arr['date'];
   		$password = $arr['password'];
   		$password2 = $arr['repassword'];
-  		$query = mysqli_query($link, "SELECT * FROM users WHERE users_email = '$email'");
+  		$query = mysqli_query($connection, "SELECT * FROM users WHERE users_email = '$email'");
   		$numrows = mysqli_num_rows($query);
   		if($numrows != 0) {
   			$message = "Пользователь с данной почтой уже существует!";
@@ -25,7 +25,7 @@ function do_register($arr, $link){
   			}
   			else{
   				$password = password_hash($password, PASSWORD_DEFAULT);
-  				$result = mysqli_query($link,
+  				$result = mysqli_query($connection,
   				"INSERT INTO users (users_name, users_surname, users_email, users_sex, users_city, users_password, users_birth_date) VALUES('$name', '$surname', '$email', '$gender', '$city', '$password', '$date')");
   				if($result == FALSE) {
   					$message = "Проблемы при создании аккаунта!";
@@ -192,19 +192,45 @@ function generate_code($seed){
    }
  }
  function get_vips($connection, $count){
- $fd = fopen("../vip_codes.txt", 'w') or die("Не удалось открыть файл");
- $arr = generate_codes($count);
- foreach($arr as &$value){
-   $query = mysqli_query($connection, "SELECT * FROM vip WHERE vip_code = '$value'");
-   if(mysqli_num_rows($query) == 0){
-     $result = mysqli_query($connection,
-     "INSERT INTO vip (vip_code) VALUES('$value')");
-     if($result == TRUE) {
-       $item = "$value" . "\n";
-       fwrite($fd, $item);
+ if($count >= 1){
+   $fd = fopen("../vip_codes.txt", 'w') or die("Не удалось открыть файл");
+   $arr = generate_codes($count);
+   foreach($arr as &$value){
+     $query = mysqli_query($connection, "SELECT * FROM vip WHERE vip_code = '$value'");
+     if(mysqli_num_rows($query) == 0){
+       $result = mysqli_query($connection,
+       "INSERT INTO vip (vip_code) VALUES('$value')");
+       if($result == TRUE) {
+         $item = "$value" . "\n";
+         fwrite($fd, $item);
+       }
      }
    }
+   fclose($fd);
  }
- fclose($fd);
+}
+function remove_code($connection, $code){
+  return $query = mysqli_query($connection, "DELETE from vip WHERE vip_code = '$code'");
+}
+function activate_code($connection, $code){
+  $key = strtoupper($code);
+  $query = mysqli_query($connection, "SELECT * from vip WHERE vip_code = '$key'");
+  if(mysqli_num_rows($query) == 0){
+    $message = "Недействительный код. Проверьте правильность введенных данных.";
+    $status = FALSE;
+  }
+  else{
+    if(remove_code($connection, $key) == FALSE){
+      $message = "Проблемы при активации VIP-кода. Попробуйте позже.";
+      $status = FALSE;
+    }
+    else{
+      $status = TRUE;
+    }
+  }
+  return [
+    'status' => $status,
+    'message' => $message,
+  ];
 }
 ?>

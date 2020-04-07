@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <head>
   <link rel="stylesheet" href="../css/register.css">
+  <link rel="stylesheet" href="../css/fonts.css">
   <link rel="stylesheet" href="../libs/bootstrap/bootstrap-grid-3.3.1.min.css" />
 </head>
 
@@ -29,7 +30,7 @@
             <input type="text" class="form-input" name="city" placeholder="Город" required>
             <input type="password" class="form-input" name="password" placeholder="Пароль" required>
             <input type="password" class="form-input" name="repassword" placeholder="Повторите пароль" required>
-            <p class="qa">Уже есть аккунт? Тогда быстрее <a href="auth.php">авторизируйся</a>!</p>
+            <p class="qa">Уже есть аккаунт? Тогда быстрее <a href="auth.php">авторизируйся</a>!</p>
             <input type="submit" name="" value="Зарегистрироваться">
           </form>
         </div>

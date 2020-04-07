@@ -1,5 +1,6 @@
 <head>
   <link rel="stylesheet" href="../css/header.css">
+  <link rel="stylesheet" href="../css/fonts.css">
   <link rel="stylesheet" href="../libs/bootstrap/bootstrap-grid-3.3.1.min.css" />
 </head>
 
@@ -20,6 +21,7 @@
                     <li><a href="#">О нас</a></li>
                     <li><a href="#">Наша работа</a></li>
                     <li><a href="#">Контакты</a></li>
+                    <li><a href="account.php">Аккаунт</a></li>
                   </ul>
                 </nav>
               </div>
@@ -31,8 +33,8 @@
               </div>
             </div>
           </div>
-          <hr class="hr-bline">
-          <hr class="hr-rline">
+            <hr class="hr-bline">
+            <hr class="hr-rline">
         </div>
       </div>
     </div>

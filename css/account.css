@@ -1,0 +1,185 @@
+body{
+  opacity: 0;
+  transition: 2.3s opacity ease-in-out;
+}
+
+.body_visible {
+	opacity: 1;
+}
+
+h1{
+  text-align: center;
+}
+
+.account{
+  display: flex;
+  justify-content:  space-around;
+}
+
+.account h2{
+  text-align: center;
+}
+
+.my-acc{
+  font-family: 'Proxima Nova Regular';
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.my-acc a{
+  border: 0.5px #175fa8 solid;
+  padding: 7px 15px;
+  border-radius: 6px;
+  margin: 15px 0 0 0;
+  color: black;
+  font-size: 16px;
+}
+
+.my-acc a:hover{
+  background-color: #175fa8;
+  color: white;
+}
+
+.my-acc table{
+  width: 425px;
+
+}
+
+.my-acc td:nth-child(2){
+  text-align: right;
+  width: 70%;
+}
+
+.my-acc td:nth-child(1){
+  text-align: left;
+  width: 30%;
+}
+
+.my-acc td:hover{
+  font-weight: 600;
+}
+
+.my-acc tr, .my-acc td{
+  font-size: 18px;
+  padding: 10px 0;
+}
+
+.my-acc tr:nth-child(even){
+  border-bottom: 1px #d14351 solid;
+}
+
+.my-acc tr:nth-child(odd){
+  border-bottom: 1px #175fa8 solid;
+}
+
+.my-acc tr:nth-child(even):hover{
+  border-bottom: 2px #d14351 solid;
+}
+
+.my-acc tr:nth-child(odd):hover{
+  border-bottom: 2px #175fa8 solid;
+}
+
+.my-acc tr:nth-last-child(1){
+  border-bottom: none;
+}
+
+.my-acc tr:nth-last-child(1):hover{
+  border-bottom: none;
+}
+
+
+
+.my-app{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  font-family: 'Proxima Nova Regular';
+}
+
+.box{
+  display: flex;
+  border: 0.5px black solid;
+  border-radius: 20px;
+  padding: 15px;
+  margin: 10px 0;
+}
+
+.box:hover{
+  border: 2px #d14351 solid;
+}
+
+.box img{
+  max-height: 120px;
+}
+
+.text_block{
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 30px;
+
+}
+
+.text_block h3{
+    margin-block-start: 0em;
+    margin-block-end: 5px;
+}
+
+.text_block h4{
+  margin-block-start: 0em;
+  margin-block-end: 5px;
+}
+
+.text_block ul{
+    margin-block-start: 0em;
+    margin-block-end: 5px;
+    padding-inline-start: 0px;
+}
+
+.text_block li{
+  list-style-type: none;
+}
+
+.full_box{
+  display: flex;
+}
+
+.hide {
+    display: none;
+}
+.hide + label ~ div{
+    display: none;
+}
+/* оформляем текст label */
+.hide + label {
+    margin: 10px 0 0 0;
+    border: 1px #175fa8 solid;
+    background-color: #175fa8;
+    color: white;
+    padding: 7px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    display: inline-block;
+}
+/* вид текста label при активном переключателе */
+.hide:checked + label {
+    margin: 0 auto;
+    color: white;
+    background-color: #d14351;
+    border: 1px #d14351 solid;
+    width: 150px;
+    padding: 5px;
+}
+/* когда чекбокс активен показываем блоки с содержанием  */
+.hide:checked + label + div {
+    display: block;
+    max-width: 300px;
+    padding: 10px;
+}
+
+.hide:checked ~ img{
+    display: none;
+}

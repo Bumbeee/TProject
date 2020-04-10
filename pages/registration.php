@@ -1,7 +1,7 @@
 <?php
   require "db.php";
   require "functions.php";
-  $arr = do_register($_POST, $connection);
+  $arr = do_register($connection, $_POST);
   ?>
 <!DOCTYPE html>
 <head>

@@ -91,17 +91,27 @@ function user_data_output($connection, $users_id = null)
   <tr><td>Email</td><td>$cat[users_email]</td></tr>
   <tr><td>Пол</td><td>$cat[users_sex]</td></tr>
   <tr><td>Дата рождения</td><td>$cat[users_birth_date]</td></tr>
-  <tr><td>Город</td><td>$cat[users_city]</td></tr>";
+  <tr><td>Город</td><td>$cat[users_city]</td></tr>
+  <tr><td><a href = accountupdate.php?users_id=$cat[users_id]&update=1>Редактировать</a></td><td></td></tr>";
   echo"</table>";
 }
+
 function user_data_edit($connection, $users_id = null, $users_name = null, $users_surname = null,
- $users_email = null, $sex = null, $users_birth_date = null, $users_city = null)
+ $users_email = null, $users_sex = null, $users_birth_date = null, $users_city = null)
 {
   $query = mysqli_query($connection, "UPDATE users SET users_name = '$users_name',
     users_surname = '$users_surname', users_email = '$users_email', users_sex = '$users_sex',
     users_birth_date = '$users_birth_date', users_city = '$users_city'
      WHERE users_id = '$users_id'");
 }
+
+function post($connection, $users_id = null)
+	{
+		$query = mysqli_query($connection, "SELECT * from users WHERE users_id = $users_id");
+		$cat = mysqli_fetch_array($query);
+		return $cat;
+	}
+
 function user_request_output($connection, $users_id = null)
 {
   $query = mysqli_query($connection, "SELECT * FROM musicians

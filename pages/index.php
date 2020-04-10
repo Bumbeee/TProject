@@ -23,6 +23,12 @@
 ?>
 
 <a href="account.php">Личный кабинет</a></br>
+
+<a href="make_requests.php">Создать заявку</a></br>
+
+<a href="requests.php">Посмотреть заявки</a></br>
+
+
 <?php if(isset($_SESSION['logged_user'])){
 echo '<a href="logout.php">Выход</a></br>';
 }

@@ -65,18 +65,16 @@
 
 <form action = "accountupdate.php?users_id=<?php echo $_GET['users_id']; ?>" method = "POST">
 Имя:
-<input type = "text" name = "users_name" value = "<?php echo @$data['users_name']; ?>">
+<p><input type = "text" name = "users_name" value = "<?php echo @$data['users_name']; ?>"></p>
 Фамилия:
-<input type = "text" name = "users_surname" value = "<?php echo @$data['users_surname']; ?>">
+<p><input type = "text" name = "users_surname" value = "<?php echo @$data['users_surname']; ?>"></p>
 Email:
-<input type = "text" name = "users_email" value = "<?php echo @$data['users_email']; ?>">
+<p><input type = "email" name = "users_email" value = "<?php echo @$data['users_email']; ?>"></p>
 Пол:
-<!-- <input type="radio" name="users_sex" value="man" required>Мужчина
-<input type="radio" name="users_sex" value="woman">Женщина -->
-<input type = "text" name = "users_sex" value = "<?php echo @$data['users_sex']; ?>">
+<p><input type = "text" name = "users_sex" value = "<?php echo @$data['users_sex']; ?>"></p>
 Дата рождения:
-<input type = "text" name = "users_birth_date" value = "<?php echo @$data['users_birth_date']; ?>">
+<p><input type = "date" name = "users_birth_date" value = "<?php echo @$data['users_birth_date']; ?>"></p>
 Город:
-<input type = "text" name = "users_city" value = "<?php echo @$data['users_city']; ?>">
+<p><input type = "text" name = "users_city" value = "<?php echo @$data['users_city']; ?>"></p>
 
 <button type = "submit" name="save">Сохранить</button>

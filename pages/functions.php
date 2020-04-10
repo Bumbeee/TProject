@@ -112,6 +112,45 @@ function post($connection, $users_id = null)
 		return $cat;
 	}
 
+function musicians_request_output($connection)
+  {
+    $query = mysqli_query($connection, "SELECT * FROM groups
+    LEFT OUTER JOIN instruments ON groups.groups_instrument = instruments.instruments_id
+    LEFT OUTER JOIN users ON groups.groups_creator = users.users_id
+    LEFT OUTER JOIN genres ON groups.groups_genre = genres.genres_id");
+    while ($cat = mysqli_fetch_assoc($query))
+    {
+      echo "<table>
+      <tr><td>Имя</td><td>$cat[groups_name]</td></tr>
+      <tr><td>Опыт</td><td>$cat[groups_experience]</td></tr>
+      <tr><td>Инструмент</td><td>$cat[instruments_name]</td></tr>
+      <tr><td>Жанр</td><td>$cat[genres_name]</td></tr>
+      <tr><td>Пол</td><td>$cat[groups_sex]</td></tr>
+      <tr><td>Возраст</td><td>$cat[groups_age]</td></tr>
+      <tr><td>Город</td><td>$cat[groups_city]</td></tr>
+      <tr><td>Описание</td><td>$cat[groups_description]</td></tr>";
+    }
+    echo"</table>";
+}
+
+function groups_request_output($connection)
+  {
+    $query = mysqli_query($connection, "SELECT * FROM musicians
+    LEFT OUTER JOIN instruments ON musicians.musicians_instrument = instruments.instruments_id
+    LEFT OUTER JOIN users ON musicians.musicians_creator = users.users_id
+    LEFT OUTER JOIN genres ON musicians.musicians_genre = genres.genres_id");
+    while ($cat = mysqli_fetch_assoc($query))
+    {
+      echo "<table>
+      <tr><td>Имя</td><td>$cat[users_name]</td></tr>
+      <tr><td>Опыт</td><td>$cat[musicians_experience]</td></tr>
+      <tr><td>Инструмент</td><td>$cat[instruments_name]</td></tr>
+      <tr><td>Жанр</td><td>$cat[genres_name]</td></tr>
+      <tr><td>Описание</td><td>$cat[musicians_description]</td></tr>";
+    }
+    echo"</table>";
+}
+
 function user_request_output($connection, $users_id = null)
 {
   $query = mysqli_query($connection, "SELECT * FROM musicians
@@ -149,17 +188,17 @@ function user_request_output($connection, $users_id = null)
   }
   echo"</table>";
 }
-function musicians_request($connection, $users_id = null, $musicians_creator = null,
+function musicians_request($connection, $musicians_creator = null,
 $musicians_experience = null, $musicians_instrument = null, $musicians_genre = null,
 $musicians_description = null, $musicians_isvip = null)
 {
-  //mysqli_query($connection, 'SET foreign_key_checks = 0');
+  mysqli_query($connection, 'SET foreign_key_checks = 0');
   $query = mysqli_query($connection, "INSERT INTO musicians (musicians_creator,
   musicians_experience, musicians_instrument, musicians_genre, musicians_description,
   musicians_isvip) VALUES ('$musicians_creator'.'$musicians_experience', '$musicians_instrument',
   '$musicians_genre', '$musicians_description', '$musicians_isvip')");
 }
-function groups_request($connection, $users_id = null, $groups_name = null, $groups_instrument = null,
+function groups_request($connection, $groups_name = null, $groups_instrument = null,
 $groups_experience = null, $groups_genre = null, $groups_description = null, $groups_isvip = null,
 $groups_creator = null, $groups_sex = null, $groups_city = null, $groups_age = null)
 {

@@ -9,7 +9,7 @@
 	function add()
 	{
 		$connection = mysqli_connect('127.0.0.1', 'root', '', 'believe_database');
-    $musicians_creator = 1;
+    $musicians_creator = $_SESSION['id'];;
     $musicians_experience = $_POST['musicians_experience'];
     $musicians_instrument = $_POST['musicians_instrument'];
     $musicians_genre = $_POST['musicians_genre'];

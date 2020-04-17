@@ -77,7 +77,11 @@ function do_auth($connection, $arr){
   			$array = mysqli_fetch_array($query);
   			$hash = $array['users_password'];
   			if(password_verify($password, $hash)){
+          $query = mysqli_query($connection, "SELECT users_id FROM users WHERE users_email = '$email' LIMIT 1");
+          $array = mysqli_fetch_array($query);
+          $id = $array['users_id'];
   				$_SESSION['logged_user'] = $email;
+          $_SESSION['id'] = $id;
   				header("Location: ../");
   					exit();
   			}

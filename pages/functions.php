@@ -1,4 +1,15 @@
 <?php
+
+function make_request($connection, $musicians_creator = null, $musicians_experience = null,
+$musicians_instrument = null, $musicians_genre = null, $musicians_description = null)
+{
+  mysqli_query($connection, 'SET foreign_key_checks = 0');
+  $query = mysqli_query($connection, "INSERT INTO musicians (musicians_creator, musicians_experience, musicians_instrument,
+    musicians_genre, musicians_description) VALUES('$musicians_creator', '$musicians_experience',
+      '$musicians_instrument', '$musicians_genre', '$musicians_description')");
+  header("Location: ../");
+}
+
 function do_register($connection, $arr){
   if(isset($arr["do_submit"])){
   	if(empty($arr['name']) || empty($arr['surname'])  || empty($arr['gender'] || empty($arr['city']))

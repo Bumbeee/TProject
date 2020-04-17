@@ -4,12 +4,12 @@
 
   if (isset($_POST['save']))
 	{
-    $musicians_creator = $_SESSION['id'];;
+    $musicians_creator = $_SESSION['id'];
     $musicians_experience = $_POST['musicians_experience'];
     $musicians_instrument = $_POST['musicians_instrument'];
     $musicians_genre = $_POST['musicians_genre'];
 		$musicians_description = $_POST['musicians_description'];
-		make_request($connection, $musicians_creator, $musicians_experience,
+		make_request_musicians($connection, $musicians_creator, $musicians_experience,
     $musicians_instrument, $musicians_genre, $musicians_description);
 	}
 ?>

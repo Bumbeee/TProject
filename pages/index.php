@@ -24,7 +24,10 @@
 
 <a href="account.php">Личный кабинет</a></br>
 
-<a href="make_requests.php">Создать заявку</a></br>
+<a href="make_requests_musician.php">Создать заявку музыканта</a></br>
+
+<a href="make_requests_group.php">Создать заявку группы</a></br>
+
 
 <a href="requests.php">Посмотреть заявки</a></br>
 

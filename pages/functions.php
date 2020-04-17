@@ -1,12 +1,24 @@
 <?php
 
-function make_request($connection, $musicians_creator = null, $musicians_experience = null,
+function make_request_musicians($connection, $musicians_creator = null, $musicians_experience = null,
 $musicians_instrument = null, $musicians_genre = null, $musicians_description = null)
 {
   mysqli_query($connection, 'SET foreign_key_checks = 0');
   $query = mysqli_query($connection, "INSERT INTO musicians (musicians_creator, musicians_experience, musicians_instrument,
     musicians_genre, musicians_description) VALUES('$musicians_creator', '$musicians_experience',
       '$musicians_instrument', '$musicians_genre', '$musicians_description')");
+  header("Location: ../");
+}
+
+function make_request_groups($connection, $groups_creator = null, $groups_name = null,
+$groups_experience = null, $groups_instrument = null, $groups_genre = null,
+$groups_sex = null, $groups_city = null, $groups_age = null, $groups_description = null)
+{
+  mysqli_query($connection, 'SET foreign_key_checks = 0');
+  $query = mysqli_query($connection, "INSERT INTO groups (groups_creator, groups_name, groups_experience,
+    groups_instrument, groups_genre, groups_sex, groups_city, groups_age, groups_description)
+    VALUES('$groups_creator', '$groups_name', '$groups_experience', '$groups_instrument',
+      '$groups_genre', '$groups_sex', '$groups_city', '$groups_age', '$groups_description')");
   header("Location: ../");
 }
 
@@ -107,7 +119,7 @@ function user_data_output($connection, $users_id = null)
   <tr><td>Пол</td><td>$cat[users_sex]</td></tr>
   <tr><td>Дата рождения</td><td>$cat[users_birth_date]</td></tr>
   <tr><td>Город</td><td>$cat[users_city]</td></tr>
-  <tr><td><a href = accountupdate.php?users_id=$cat[users_id]&update=1>Редактировать</a></td><td></td></tr>";
+  <tr><td><a href = account_update.php?users_id=$cat[users_id]&update=1>Редактировать</a></td><td></td></tr>";
   echo"</table>";
 }
 

@@ -47,7 +47,6 @@
           <div class="my-app">
             <h2>Мои заявки</h2>
             <div class="box">
-                <img src="../img/123.jpg" alt="">
                 <div class="text_block">
                   <h3>Заявка №3</h3>
                   <h4>Поиск группы</h4>
@@ -71,7 +70,6 @@
                 </div>
 
                 <div class="box">
-                    <img src="../img/123.jpg" alt="">
                     <div class="text_block">
                       <h3>Заявка №3</h3>
                       <h4>Поиск группы</h4>

@@ -10,5 +10,5 @@
 # Документация
 •	[ТЗ docx](https://github.com/Bumbeee/TProject/blob/master/documents/TZ.docx) <br>
 •	[ТЗ pdf](https://github.com/Bumbeee/TProject/blob/master/documents/TZ.pdf) <br>
-•	[Курсовая doc](https://github.com/Bumbeee/TProject/blob/master/documents/Kursovaya.doc) <br>
+•	[Курсовая doc](https://github.com/Bumbeee/TProject/blob/master/documents/Kursovaya.docx) <br>
 •	[Курсовая pdf](https://github.com/Bumbeee/TProject/blob/master/documents/Kursovaya.pdf)

@@ -9,11 +9,11 @@
 <script src="js/main.js"></script>
 
       <div class="logo">
-        <a href="pages/work.php"><img src="img/logo.png" alt=""></a>
+        <a href="page/work.php"><img src="img/logo.png" alt=""></a>
       </div>
       <div class="main">
-        <a href="pages/musician.php"><img src="img/mus.jpg" alt=""></a>
-        <a href="pages/group.php"><img src="img/group.jpg" alt=""></a>
+        <a href="page/musician.php"><img src="img/mus.jpg" alt=""></a>
+        <a href="page/group.php"><img src="img/group.jpg" alt=""></a>
       </div>
 
 </body>

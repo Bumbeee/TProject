@@ -62,6 +62,8 @@
     <form class="order_form" action="index.html" method="post">
       <h2>Ищете музыканта? Тогда Вы по адресу!</h2>
       <h4>Заполните несколько полей и мы обязательно найдем для Вас музыканта</h4>
+      <label for="#name">Название группы</label>
+      <input type="text" id="name" name="" value=""><br>
       <select class="">
         <option selected="selected" disabled>Инструмент</option>
         <option>Гитара</option>
@@ -86,7 +88,7 @@
       <textarea name="" cols="43" rows="5" placeholder="Расскажите о Вашей группе, нам очень интересно!"></textarea><br>
       <h5>Хотите чтобы Вашу заявку увидели первой? Введите VIP-код!</h5>
       <input type="text" placeholder="Промокод вводить сюда!"><br><br>
-      <button data-remodal-action="confirm" class="remodal-confirm">Найти</button>
+      <button data-remodal-action="confirm" class="remodal-confirm" id="mus_find">Найти</button>
     </form>
 </div>
 
@@ -95,31 +97,31 @@
   <form class="order_form" action="index.html" method="post">
     <h2>Кажется Вы хотите найти себе группу... Не вопрос!</h2>
     <h4>Заполните несколько полей и мы обязательно подберем для Вас группу</h4>
-    <select class="">
+    <select class="instrument">
       <option selected="selected" disabled>Инструмент</option>
       <option>Гитара</option>
       <option>Фортепиано</option>
       <option>Барабаны</option>
       <option>Труба</option>
     </select>
-    <select class="">
+    <select class="experience">
       <option selected="selected" disabled>Опыт</option>
       <option>< 1 года</option>
       <option>1 - 3 года</option>
       <option>3 - 5 лет</option>
       <option>> 5 лет</option>
     </select>
-    <select class="">
+    <select class="genre">
       <option selected="selected" disabled>Жанр</option>
       <option>Поп</option>
       <option>Джаз</option>
       <option>Рок</option>
       <option>Хип-хоп</option>
     </select><br>
-    <textarea name="" cols="43" rows="5" placeholder="Расскажите о себе, нам очень интересно!"></textarea><br>
+    <textarea name="" cols="43" rows="5" class="about_you" placeholder="Расскажите о себе, нам очень интересно!"></textarea><br>
     <h5>Хотите чтобы Вашу заявку увидели первой? Введите VIP-код!</h5>
-    <input type="text" placeholder="Промокод вводить сюда!"><br><br>
-    <button data-remodal-action="confirm" class="remodal-confirm">Найти</button>
+    <input type="text" class="vipcode" placeholder="Промокод вводить сюда!"><br><br>
+    <button data-remodal-action="confirm" class="remodal-confirm" id="gr_find">Найти</button>
   </form>
 </div>
 

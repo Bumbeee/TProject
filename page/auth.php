@@ -1,3 +1,8 @@
+<?php
+require "db.php";
+require "functions.php";
+$arr = do_auth($connection, $_POST);
+?>
 <!DOCTYPE html>
 <head>
   <link rel="stylesheet" href="../css/register.css">
@@ -19,11 +24,16 @@
           <div class="logo">
             <a href="../"><img src="../img/logo.png" alt=""></a>
           </div>
+          <?php
+          if(!empty($arr['message'])){
+          echo  '<div class="error_message">'.$arr['message'].'</div>';
+          }
+        ?>
           <form class="reg" method="post">
-              <input type="email" class="form-input" name="email" placeholder="Email" required>
+              <input type="email" class="form-input" name="email" placeholder="Email" required value = "<?php echo $arr['email']?>">
               <input type="password" class="form-input" name="password" placeholder="Пароль" required>
               <p class="qa">Ещё нет аккаунта? <a href="register.php">Регистрируйся</a> прямо сейчас!</p>
-              <input type="submit" name="" value="Войти">
+              <input type="submit" name="do_login" value="Войти">
           </form>
         </div>
       </div>

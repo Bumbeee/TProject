@@ -1,6 +1,6 @@
 <?php
-  require "db.php";
-  require "functions.php";
+  require "../page/db.php";
+  require "../page/functions.php";
 
   $data = $_POST;
 	$user = post($connection, $_GET['users_id']);
@@ -63,7 +63,7 @@
 	}
 ?>
 
-<form action = "accountupdate.php?users_id=<?php echo $_GET['users_id']; ?>" method = "POST">
+<form action = "account_update.php?users_id=<?php echo $_GET['users_id']; ?>" method = "POST">
 Имя:
 <p><input type = "text" name = "users_name" value = "<?php echo @$data['users_name']; ?>"></p>
 Фамилия:

@@ -1,0 +1,44 @@
+.container{
+  font-family: 'Proxima Nova Regular';
+}
+
+.header{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header img{
+  max-width: 250px;
+}
+
+.header h1{
+  margin-block-start: 0em;
+  margin-block-end: 5px;
+  padding-inline-start: 0px;
+}
+
+.codes{
+  text-align: center;
+}
+
+.codes input[type=number]{
+  outline: none;
+  border: none;
+  border-bottom: 2px solid #d9d9d9;
+  padding: 5px 10px 5px 20px;
+}
+
+.codes a{
+  color: #fff;
+  padding: 7px 10px;
+  border-radius: 25px;
+  background-color: #175fa8;
+  transition: 0.5s;
+}
+
+.codes h4{
+  margin-block-start: 0em;
+  margin-block-end: 5px;
+  padding-inline-start: 0px;
+}

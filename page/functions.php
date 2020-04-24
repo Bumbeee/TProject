@@ -330,22 +330,39 @@ function generate_code($seed){
    echo '</br>';
    }
  }
- function get_vips($connection, $count){
- if($count >= 1){
-   $fd = fopen("../vip_codes.txt", 'w') or die("Не удалось открыть файл");
-   $arr = generate_codes($count);
-   foreach($arr as &$value){
-     $query = mysqli_query($connection, "SELECT * FROM vip WHERE vip_code = '$value'");
-     if(mysqli_num_rows($query) == 0){
-       $result = mysqli_query($connection,
-       "INSERT INTO vip (vip_code) VALUES('$value')");
-       if($result == TRUE) {
-         $item = "$value" . "\n";
-         fwrite($fd, $item);
+ function get_vips($connection, $arr){
+   if(isset($_POST['get_vips'])){
+      $count = $_POST['code_count'];
+      if($count >= 1){
+      $fd = fopen("../admin/codes.txt", 'w') or die("Не удалось открыть файл");
+      $arr = generate_codes($count);
+      foreach($arr as &$value){
+        $query = mysqli_query($connection, "SELECT * FROM vip WHERE vip_code = '$value'");
+        if(mysqli_num_rows($query) == 0){
+          $result = mysqli_query($connection,
+          "INSERT INTO vip (vip_code) VALUES('$value')");
+          if($result == TRUE) {
+            $item = "$value" . "\n";
+            fwrite($fd, $item);
+          }
        }
-     }
+    }
+      if (file_exists("../admin/codes.txt")) {
+      if (ob_get_level()) {
+        ob_end_clean();
+      }
+      header('Content-Description: File Transfer');
+      header('Content-Type: application/octet-stream');
+      header('Content-Disposition: attachment; filename=' . basename("../admin/codes.txt"));
+      header('Content-Transfer-Encoding: binary');
+      header('Expires: 0');
+      header('Cache-Control: must-revalidate');
+      header('Pragma: public');
+      header('Content-Length: ' . filesize("../admin/codes.txt"));
+      readfile("../admin/codes.txt");
+      exit;
+    }
    }
-   fclose($fd);
  }
 }
 function remove_code($connection, $code){

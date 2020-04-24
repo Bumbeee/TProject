@@ -1,3 +1,8 @@
+<?php
+require "../page/db.php";
+require "../page/functions.php";
+$arr = get_vips($connection, $_POST);
+?>
 <!DOCTYPE html>
 <head>
   <link rel="stylesheet" href="css/index.css">
@@ -21,8 +26,10 @@
 
       <div class="codes">
         <h4>Сколько VIP-кодов сгенерировать?</h4>
-        <input type="number" id="code" value="10">
-        <a href="codes.txt" download>Сгенерировать</a>
+        <form class="vips" method="post">
+        <input type="number" name= "code_count" id="code" value="10">
+        <input type="submit" name= "get_vips" value = "Сгенерировать">
+      </form>
       </div>
     </div>
   </div>

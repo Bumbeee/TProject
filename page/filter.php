@@ -16,10 +16,7 @@
             <h4>Фильтр</h4>
             <select class="">
               <option selected="selected" disabled>Инструмент</option>
-              <option>Гитара</option>
-              <option>Фортепиано</option>
-              <option>Барабаны</option>
-              <option>Труба</option>
+              <?php setinstruments($connection); ?>
             </select>
             <select class="">
               <option selected="selected" disabled>Пол</option>
@@ -35,10 +32,7 @@
             </select>
             <select class="">
               <option selected="selected" disabled>Жанр</option>
-              <option>Поп</option>
-              <option>Джаз</option>
-              <option>Рок</option>
-              <option>Хип-хоп</option>
+              <?php setgenres($connection); ?>
             </select>
             <input type="text" placeholder="Город">
             <input type="number" placeholder="Возраст">
@@ -66,10 +60,7 @@
       <input type="text" id="name" name="" value=""><br>
       <select class="">
         <option selected="selected" disabled>Инструмент</option>
-        <option>Гитара</option>
-        <option>Фортепиано</option>
-        <option>Барабаны</option>
-        <option>Труба</option>
+        <?php setinstruments($connection); ?>
       </select>
       <select class="">
         <option selected="selected" disabled>Опыт</option>
@@ -80,10 +71,7 @@
       </select>
       <select class="">
         <option selected="selected" disabled>Жанр</option>
-        <option>Поп</option>
-        <option>Джаз</option>
-        <option>Рок</option>
-        <option>Хип-хоп</option>
+          <?php setgenres($connection); ?>
       </select><br>
       <textarea name="" cols="43" rows="5" placeholder="Расскажите о Вашей группе, нам очень интересно!"></textarea><br>
       <h5>Хотите чтобы Вашу заявку увидели первой? Введите VIP-код!</h5>
@@ -99,10 +87,7 @@
     <h4>Заполните несколько полей и мы обязательно подберем для Вас группу</h4>
     <select class="instrument">
       <option selected="selected" disabled>Инструмент</option>
-      <option>Гитара</option>
-      <option>Фортепиано</option>
-      <option>Барабаны</option>
-      <option>Труба</option>
+      <?php setinstruments($connection); ?>
     </select>
     <select class="experience">
       <option selected="selected" disabled>Опыт</option>
@@ -113,10 +98,7 @@
     </select>
     <select class="genre">
       <option selected="selected" disabled>Жанр</option>
-      <option>Поп</option>
-      <option>Джаз</option>
-      <option>Рок</option>
-      <option>Хип-хоп</option>
+      <?php setgenres($connection); ?>
     </select><br>
     <textarea name="" cols="43" rows="5" class="about_you" placeholder="Расскажите о себе, нам очень интересно!"></textarea><br>
     <h5>Хотите чтобы Вашу заявку увидели первой? Введите VIP-код!</h5>

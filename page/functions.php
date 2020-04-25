@@ -143,12 +143,33 @@ function post($connection, $users_id = null)
 		return $cat;
 	}
 
+
+
 function groups_request_output($connection)
   {
     $query = mysqli_query($connection, "SELECT * FROM groups
     LEFT OUTER JOIN instruments ON groups.groups_instrument = instruments.instruments_id
     LEFT OUTER JOIN users ON groups.groups_creator = users.users_id
-    LEFT OUTER JOIN genres ON groups.groups_genre = genres.genres_id");
+    LEFT OUTER JOIN genres ON groups.groups_genre = genres.genres_id
+    WHERE groups.groups_isvip = 1");
+    while ($cat = mysqli_fetch_assoc($query))
+    {
+      echo "<table>
+      <tr><td>Имя</td><td>$cat[groups_name]</td></tr>
+      <tr><td>Опыт</td><td>$cat[groups_experience]</td></tr>
+      <tr><td>Инструмент</td><td>$cat[instruments_name]</td></tr>
+      <tr><td>Жанр</td><td>$cat[genres_name]</td></tr>
+      <tr><td>Пол</td><td>$cat[groups_sex]</td></tr>
+      <tr><td>Возраст</td><td>$cat[groups_age]</td></tr>
+      <tr><td>Город</td><td>$cat[groups_city]</td></tr>
+      <tr><td>Описание</td><td>$cat[groups_description]</td></tr>";
+      echo "</table>";
+    }
+    $query = mysqli_query($connection, "SELECT * FROM groups
+    LEFT OUTER JOIN instruments ON groups.groups_instrument = instruments.instruments_id
+    LEFT OUTER JOIN users ON groups.groups_creator = users.users_id
+    LEFT OUTER JOIN genres ON groups.groups_genre = genres.genres_id
+    WHERE groups.groups_isvip = 0");
     while ($cat = mysqli_fetch_assoc($query))
     {
       echo "<table>
@@ -169,8 +190,41 @@ function musicians_request_output($connection)
     $query = mysqli_query($connection, "SELECT * FROM musicians
     LEFT OUTER JOIN instruments ON musicians.musicians_instrument = instruments.instruments_id
     LEFT OUTER JOIN users ON musicians.musicians_creator = users.users_id
-    LEFT OUTER JOIN genres ON musicians.musicians_genre = genres.genres_id");
+    LEFT OUTER JOIN genres ON musicians.musicians_genre = genres.genres_id
+    WHERE musicians.musicians_isvip = 1");
     $i = 1;
+    while ($cat = mysqli_fetch_assoc($query))
+    {
+      echo "<div class=\"box\">";
+      echo "<h2>$cat[users_surname] $cat[users_name]</h2>";
+      echo "<img src='../img/".$cat['instruments_picture']."' />";
+      echo "<div class=\"info\">";
+      echo "<ul>
+        <li>Пол: $cat[users_sex]</li>
+        <li>Возраст: $cat[users_birth_date]</li>
+        <li>Инструмент: $cat[instruments_name]</li>
+        <li>Опыт: $cat[musicians_experience]</li>
+        <li>Жанр: $cat[genres_name]</li>
+        <li>Город: $cat[users_city]</li>
+      </ul>";
+      echo "</div>";
+      echo "<div class=\"about\">";
+      echo "<h4>О себе</h4><p>$cat[musicians_description]</p>";
+      echo "</div>";
+      echo "<nav><a href=\"#id-$i\">Откликнуться!</a></nav>";
+      echo "  <div class=\"remodal\" data-remodal-id=\"id-$i\">
+          <button data-remodal-action=\"close\" class=\"remodal-close\"></button>
+          <h4>Понравился музыкант? Напишите ему на почту!</h4>
+          <a href=\"mailto:$cat[users_email]\">$cat[users_email]</a>
+            </div>";
+      echo "</div>";
+    }
+    $query = mysqli_query($connection, "SELECT * FROM musicians
+    LEFT OUTER JOIN instruments ON musicians.musicians_instrument = instruments.instruments_id
+    LEFT OUTER JOIN users ON musicians.musicians_creator = users.users_id
+    LEFT OUTER JOIN genres ON musicians.musicians_genre = genres.genres_id
+    WHERE musicians.musicians_isvip = 0");
+    //$i = 1;
     while ($cat = mysqli_fetch_assoc($query))
     {
       echo "<div class=\"box\">";
@@ -262,10 +316,27 @@ function user_request_output($connection, $users_id = null)
     echo "</div>";
     $i++;
   }
-
 }
 
-function musicians_request()
+function setinstruments($connection, $instruments_id = null, $instruments_name = null)
+  {
+    $query = mysqli_query($connection, "SELECT * FROM instruments");
+    while ($cat = mysqli_fetch_assoc($query))
+    {
+    echo "<option value='".$cat['instruments_id']."'>".$cat['instruments_name']."</option>";
+  }
+}
+
+function setgenres($connection, $genres_id = null, $genres_name = null)
+  {
+    $query = mysqli_query($connection, "SELECT * FROM genres");
+    while ($cat = mysqli_fetch_assoc($query))
+    {
+    echo "<option value='".$cat['genres_id']."'>".$cat['genres_name']."</option>";
+  }
+}
+
+function musicians_request($connection)
 {
   $musicians_creator = $_SESSION['id'];
   $instrument = $_POST['instrument'];
@@ -273,13 +344,7 @@ function musicians_request()
   $genre = $_POST['genre'];
   $about_you = $_POST['about_you'];
 
-
-
-
   $vipcode = $_POST['vipcode'];
-
-
-
 
   mysqli_query($connection, 'SET foreign_key_checks = 0');
   $query = mysqli_query($connection, "INSERT INTO musicians (musicians_creator,
@@ -368,6 +433,7 @@ function generate_code($seed){
 function remove_code($connection, $code){
   return $query = mysqli_query($connection, "DELETE from vip WHERE vip_code = '$code'");
 }
+
 function activate_code($connection, $code){
   $key = strtoupper($code);
   $query = mysqli_query($connection, "SELECT * from vip WHERE vip_code = '$key'");

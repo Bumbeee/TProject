@@ -39,9 +39,9 @@
             <select class="" name="age">
               <option selected="selected" disabled>Возраст</option>
               <option>< 20 лет</option>
-              <option>20-30 лет</option>
-              <option>30-40 лет</option>
-              <option>40-50 лет</option>
+              <option>20 - 30 лет</option>
+              <option>30 - 40 лет</option>
+              <option>40 - 50 лет</option>
               <option>> 50 лет</option>
             </select>
             <input type="submit" name="do_filter" value="Найти">

@@ -22,6 +22,7 @@
                     <li><a href="#">Наша работа</a></li>
                     <li><a href="../admin">Админ</a></li>
                     <li><a href="account.php">Аккаунт</a></li>
+                    <li><a href="logout.php">Выход</a></li>
                   </ul>
                 </nav>
               </div>

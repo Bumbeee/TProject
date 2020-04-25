@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="../libs/remodal/remodal.css">
   <link rel="stylesheet" href="../libs/remodal/remodal-default-theme.css">
 </head>
-<title>Believe - Личный кабинет</title>
+<title>Believe - Музыканты</title>
 <body>
   <?php require("header.php"); ?>
   <?php require("filter.php"); ?>

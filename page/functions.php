@@ -114,7 +114,7 @@ function filter_by($arr, $cat, $value){
   if($value != ""){
     $res = [];
     foreach($arr as &$item){
-      if(strtoupper($item["$cat"]) == strtoupper($value)){
+      if(mb_strtoupper($item["$cat"]) == mb_strtoupper($value)){
         array_push($res, $item);
       }
     }
@@ -160,12 +160,17 @@ function print_musicians_requests($requests){
     echo "<div class=\"about\">";
     echo "<h4>О себе</h4><p>$cat[musicians_description]</p>";
     echo "</div>";
+    if(isset($_SESSION["id"])){
     echo "<nav><a href=\"#id-$i\">Откликнуться!</a></nav>";
     echo "  <div class=\"remodal\" data-remodal-id=\"id-$i\">
         <button data-remodal-action=\"close\" class=\"remodal-close\"></button>
         <h4>Понравился музыкант? Напишите ему на почту!</h4>
         <a href=\"mailto:$cat[users_email]\">$cat[users_email]</a>
           </div>";
+        }
+      else{
+        echo "<nav><a href=\"auth.php\">Авторизуйтесь, чтобы ответить на заявку</a></nav>";
+      }
     echo "</div>";
     $i++;
   }
@@ -173,15 +178,27 @@ function print_musicians_requests($requests){
 }
 // Массив всех заявок музыкантов.
 function all_musicians($connection){
+  $requests = [];
+  $query = mysqli_query($connection, "SELECT * FROM musicians
+  LEFT OUTER JOIN instruments ON musicians.musicians_instrument = instruments.instruments_id
+  LEFT OUTER JOIN users ON musicians.musicians_creator = users.users_id
+  LEFT OUTER JOIN genres ON musicians.musicians_genre = genres.genres_id
+  WHERE musicians.musicians_isvip = 1");
+  if(mysqli_num_rows($query) != 0){
+    while($request = mysqli_fetch_assoc($query)){
+      array_push($requests, $request);
+    }
+ }
   $query = mysqli_query($connection, "SELECT * FROM musicians
   LEFT OUTER JOIN instruments ON musicians.musicians_instrument = instruments.instruments_id
   LEFT OUTER JOIN users ON musicians.musicians_creator = users.users_id
   LEFT OUTER JOIN genres ON musicians.musicians_genre = genres.genres_id
   WHERE musicians.musicians_isvip = 0");
-  $requests = [];
-  while($request = mysqli_fetch_assoc($query)){
-    array_push($requests, $request);
-  }
+  if(mysqli_num_rows($query) != 0){
+    while($request = mysqli_fetch_assoc($query)){
+      array_push($requests, $request);
+    }
+ }
   return $requests;
 }
 // Массив заявок музыкантов по фильтру.
@@ -225,9 +242,9 @@ function musicians_by_filter($connection, $arr){
       if(!empty($arr["age"])){
          foreach($res as &$item){
             if(($arr["age"] == "< 20 лет" && get_age($item["users_birth_date"]) < 20)
-            || ($arr["age"] == "20-30 лет" && get_age($item["users_birth_date"]) >= 20 && get_age($item["users_birth_date"]) < 30)
-            || ($arr["age"] == "30-40 лет" && get_age($item["users_birth_date"]) >= 30 && get_age($item["users_birth_date"]) < 40)
-            || ($arr["age"] == "40-50 лет" && get_age($item["users_birth_date"]) >= 40 && get_age($item["users_birth_date"]) < 50)
+            || ($arr["age"] == "20 - 30 лет" && get_age($item["users_birth_date"]) >= 20 && get_age($item["users_birth_date"]) < 30)
+            || ($arr["age"] == "30 - 40 лет" && get_age($item["users_birth_date"]) >= 30 && get_age($item["users_birth_date"]) < 40)
+            || ($arr["age"] == "40 - 50 лет" && get_age($item["users_birth_date"]) >= 40 && get_age($item["users_birth_date"]) < 50)
             || ($arr["age"] == "> 50 лет" && get_age($item["users_birth_date"]) >= 50)
           ){
             array_push($temp, $item);
@@ -248,6 +265,104 @@ function musicians_by_filter($connection, $arr){
      "city" => $arr["city"],
    ];*/
 }
+
+// Выовод массива заявок групп.
+function print_groups_requests($requests){
+  if(!empty($requests)){
+  $i = 1;
+  foreach($requests as $cat)
+  {
+    if($cat["groups_sex"] == "man"){
+      $sex = "Мужской";
+    }
+    if($cat["groups_sex"] == "woman"){
+      $sex = "Женский";
+    }
+    echo "<div class=\"box\">";
+    echo "<h2>$cat[groups_name]</h2>";
+    echo "<img src='../img/".$cat['instruments_picture']."' />";
+    echo "<div class=\"info\">";
+    echo "<ul>
+      <li>Пол: $sex</li>
+      <li>Возраст: $cat[groups_age]</li>
+      <li>Инструмент: $cat[instruments_name]</li>
+      <li>Опыт: $cat[groups_experience]</li>
+      <li>Жанр: $cat[genres_name]</li>
+      <li>Город: $cat[groups_city]</li>
+    </ul>";
+    echo "</div>";
+    echo "<div class=\"about\">";
+    echo "<h4>О группе</h4><p>$cat[groups_description]</p>";
+    echo "</div>";
+    if(isset($_SESSION["id"])){
+    echo "<nav><a href=\"#id-$i\">Откликнуться!</a></nav>";
+    echo "  <div class=\"remodal\" data-remodal-id=\"id-$i\">
+        <button data-remodal-action=\"close\" class=\"remodal-close\"></button>
+        <h4>Понравилась группа? Напишите представителю группы на почту!</h4>
+        <a href=\"mailto:$cat[users_email]\">$cat[users_email]</a>
+          </div>";
+        }
+          else{
+            echo "<nav><a href=\"auth.php\">Авторизуйтесь, чтобы ответить на заявку</a></nav>";
+          }
+    echo "</div>";
+    $i++;
+  }
+}
+}
+// Массив всех заявок групп.
+function all_groups($connection){
+  $requests = [];
+  $query = mysqli_query($connection, "SELECT * FROM groups
+  LEFT OUTER JOIN instruments ON groups.groups_instrument = instruments.instruments_id
+  LEFT OUTER JOIN users ON groups.groups_creator = users.users_id
+  LEFT OUTER JOIN genres ON groups.groups_genre = genres.genres_id
+  WHERE groups.groups_isvip = 1");
+  if(mysqli_num_rows($query) != 0){
+    while($request = mysqli_fetch_assoc($query)){
+      array_push($requests, $request);
+    }
+ }
+ $query = mysqli_query($connection, "SELECT * FROM groups
+ LEFT OUTER JOIN instruments ON groups.groups_instrument = instruments.instruments_id
+ LEFT OUTER JOIN users ON groups.groups_creator = users.users_id
+ LEFT OUTER JOIN genres ON groups.groups_genre = genres.genres_id
+ WHERE groups.groups_isvip = 0");
+  if(mysqli_num_rows($query) != 0){
+    while($request = mysqli_fetch_assoc($query)){
+      array_push($requests, $request);
+    }
+ }
+  return $requests;
+}
+// Массив заявок групп по фильтру.
+function groups_by_filter($connection, $arr){
+  if(isset($arr["do_filter"])){
+    if(empty($arr['instrument']) && empty($arr['genre'])  && empty($arr['sex']) && empty($arr['city'])
+  		&& empty($arr['experience']) && empty($arr['age'])){
+        return all_groups($connection);
+  		}
+    else{
+      if($arr["sex"] == "Мужской"){
+        $sex = "man";
+      }
+      if($arr["sex"] == "Женский"){
+        $sex = "woman";
+      }
+      $temp = all_groups($connection);
+
+      $temp = filter_by($temp, "groups_city", $arr["city"]);
+      $temp = filter_by($temp, "groups_sex", $sex);
+      $temp = filter_by($temp, "instruments_id", $arr["instrument"]);
+      $temp = filter_by($temp, "genres_id", $arr["genre"]);
+      $temp = filter_by($temp, "groups_experience", $arr["experience"]);
+      $temp = filter_by($temp, "groups_age", $arr["age"]);
+      $res = $temp;
+     }
+   }
+   return $res;
+}
+
 
 function user_data_output($connection, $users_id = null)
 {
@@ -442,6 +557,10 @@ function user_request_output($connection, $users_id = null)
   WHERE groups_creator = $users_id");
   while ($cat = mysqli_fetch_assoc($query))
   {
+    if($cat["groups_sex"] == "man")
+      $sex = "Мужской";
+    if($cat["groups_sex"] == "woman")
+      $sex = "Женский";
     echo "<div class=\"box\">";
     echo "<div class=\"text_block\">";
     echo "<h3>Заявка №$i</h3>";
@@ -452,7 +571,7 @@ function user_request_output($connection, $users_id = null)
         <ul>
           <li><b>Название группы:</b> $cat[groups_name]</li>
           <li><b>Желаемый опыт:</b> $cat[groups_experience]</li>
-          <li><b>Пол:</b> $cat[groups_sex]</li>
+          <li><b>Пол:</b> $sex</li>
           <li><b>Возраст:</b> $cat[groups_age]</li>
           <li><b>Город:</b> $cat[groups_city]</li>
           <li><b>Инструмент:</b> $cat[instruments_name]</li>
@@ -567,6 +686,7 @@ function generate_code($seed){
           }
        }
     }
+    fclose($fd);
       if (file_exists("../admin/codes.txt")) {
       if (ob_get_level()) {
         ob_end_clean();

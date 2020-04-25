@@ -1,5 +1,6 @@
 <?php
 	require 'db.php';
-	unset($_SESSION['logged_user']);
+	unset($_SESSION['id']);
+	unset($_SESSION['loged_user']);
 	header('Location: /');
 ?>

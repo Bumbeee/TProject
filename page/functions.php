@@ -21,7 +21,7 @@ $groups_sex = null, $groups_city = null, $groups_age = null, $groups_description
       '$groups_genre', '$groups_sex', '$groups_city', '$groups_age', '$groups_description')");
   header("Location: ../");
 }
-
+// Регистрация.
 function do_register($connection, $arr){
   if(isset($arr["do_submit"])){
   	if(empty($arr['name']) || empty($arr['surname'])  || empty($arr['gender'] || empty($arr['city']))
@@ -72,6 +72,7 @@ function do_register($connection, $arr){
     'city' => $city,
     ];
 }
+// Авторизация.
 function do_auth($connection, $arr){
   if(isset($arr["do_login"])){
   	if(empty($arr['email'])|| empty($arr['password'])){
@@ -108,17 +109,166 @@ function do_auth($connection, $arr){
     'email' => $email,
 ];
 }
+// Фильтрация по категории.
+function filter_by($arr, $cat, $value){
+  if($value != ""){
+    $res = [];
+    foreach($arr as &$item){
+      if(strtoupper($item["$cat"]) == strtoupper($value)){
+        array_push($res, $item);
+      }
+    }
+    return $res;
+  }
+  return $arr;
+}
+// Возраст по дате рождения формата yyyy-mm-dd.
+function get_age($birth_date){
+  $age = 0;
+  $tmp = explode('-',$birth_date);
+  $age = date("Y") - $tmp[0];
+  if($tmp[1] > date("m"))
+    $age = $age -1;
+  return $age;
+}
+// Выовод массива заявок музыкантов.
+function print_musicians_requests($requests){
+  if(!empty($requests)){
+  $i = 1;
+  foreach($requests as $cat)
+  {
+    $age = get_age($cat["users_birth_date"]);
+    if($cat["users_sex"] == "man"){
+      $sex = "Мужской";
+    }
+    if($cat["users_sex"] == "woman"){
+      $sex = "Женщина";
+    }
+    echo "<div class=\"box\">";
+    echo "<h2>$cat[users_surname] $cat[users_name]</h2>";
+    echo "<img src='../img/".$cat['instruments_picture']."' />";
+    echo "<div class=\"info\">";
+    echo "<ul>
+      <li>Пол: $sex</li>
+      <li>Возраст: $age</li>
+      <li>Инструмент: $cat[instruments_name]</li>
+      <li>Опыт: $cat[musicians_experience]</li>
+      <li>Жанр: $cat[genres_name]</li>
+      <li>Город: $cat[users_city]</li>
+    </ul>";
+    echo "</div>";
+    echo "<div class=\"about\">";
+    echo "<h4>О себе</h4><p>$cat[musicians_description]</p>";
+    echo "</div>";
+    echo "<nav><a href=\"#id-$i\">Откликнуться!</a></nav>";
+    echo "  <div class=\"remodal\" data-remodal-id=\"id-$i\">
+        <button data-remodal-action=\"close\" class=\"remodal-close\"></button>
+        <h4>Понравился музыкант? Напишите ему на почту!</h4>
+        <a href=\"mailto:$cat[users_email]\">$cat[users_email]</a>
+          </div>";
+    echo "</div>";
+    $i++;
+  }
+}
+}
+// Массив всех заявок музыкантов.
+function all_musicians($connection){
+  $query = mysqli_query($connection, "SELECT * FROM musicians
+  LEFT OUTER JOIN instruments ON musicians.musicians_instrument = instruments.instruments_id
+  LEFT OUTER JOIN users ON musicians.musicians_creator = users.users_id
+  LEFT OUTER JOIN genres ON musicians.musicians_genre = genres.genres_id
+  WHERE musicians.musicians_isvip = 0");
+  $requests = [];
+  while($request = mysqli_fetch_assoc($query)){
+    array_push($requests, $request);
+  }
+  return $requests;
+}
+// Массив заявок музыкантов по фильтру.
+function musicians_by_filter($connection, $arr){
+  if(isset($arr["do_filter"])){
+    if(empty($arr['instrument']) && empty($arr['genre'])  && empty($arr['sex']) && empty($arr['city'])
+  		&& empty($arr['experience']) && empty($arr['age'])){
+        return all_musicians($connection);
+  		}
+    else{
+      if($arr["sex"] == "Мужской"){
+        $sex = "man";
+      }
+      if($arr["sex"] == "Женский"){
+        $sex = "woman";
+      }
+      $requests = all_musicians($connection);
+      $temp = [];
+
+
+      $temp = filter_by($requests, "users_city", $arr["city"]);
+      $temp = filter_by($temp, "users_sex", $sex);
+      $temp = filter_by($temp, "instruments_id", $arr["instrument"]);
+      $temp = filter_by($temp, "genres_id", $arr["genre"]);
+
+      $res = $temp;
+      $temp = [];
+      if(!empty($arr["experience"])){
+         foreach($res as &$item){
+           if(($arr["experience"] == "< 1 года1 - 3 года" && $item["musicians_experience"] < 1)
+           || ($arr["experience"] == "1 - 3 года" && $item["musicians_experience"] >= 1 && $item["musicians_experience"] < 3)
+           || ($arr["experience"] == "3 - 5 лет" && $item["musicians_experience"] >= 3 && $item["musicians_experience"] < 5)
+           || ($arr["experience"] == "> 5 лет" && $item["musicians_experience"] >= 5)
+         ){
+            array_push($temp, $item);
+         }
+       }
+      $res = $temp;
+      }
+      $temp = [];
+      if(!empty($arr["age"])){
+         foreach($res as &$item){
+            if(($arr["age"] == "< 20 лет" && get_age($item["users_birth_date"]) < 20)
+            || ($arr["age"] == "20-30 лет" && get_age($item["users_birth_date"]) >= 20 && get_age($item["users_birth_date"]) < 30)
+            || ($arr["age"] == "30-40 лет" && get_age($item["users_birth_date"]) >= 30 && get_age($item["users_birth_date"]) < 40)
+            || ($arr["age"] == "40-50 лет" && get_age($item["users_birth_date"]) >= 40 && get_age($item["users_birth_date"]) < 50)
+            || ($arr["age"] == "> 50 лет" && get_age($item["users_birth_date"]) >= 50)
+          ){
+            array_push($temp, $item);
+          }
+        }
+        $res = $temp;
+      }
+     }
+   }
+   return $res;
+   /*print_musicians_requests($res);
+   return [
+     "sex" => $arr["sex"],
+     "age" => $arr["age"],
+     "experience" => $arr["experience"],
+     "instrument" => $arr["instrument"],
+     "genre" => $arr["genre"],
+     "city" => $arr["city"],
+   ];*/
+}
+
 function user_data_output($connection, $users_id = null)
 {
   $query = mysqli_query($connection, "SELECT * FROM users WHERE users_id = $users_id");
   $cat = mysqli_fetch_assoc($query);
 
+  if($cat["users_sex"] == "man"){
+    $sex = "Мужской";
+  }
+  if($cat["users_sex"] == "woman"){
+    $sex = "Женский";
+  }
+  $tmp = explode('-',$cat['users_birth_date']);
+  $date = $tmp[2] . '.' . $tmp[1] . '.' . $tmp[0];
+
   echo "<table>
   <tr><td>Имя</td><td>$cat[users_name]</td></tr>
   <tr><td>Фамилия</td><td>$cat[users_surname]</td></tr>
   <tr><td>Email</td><td>$cat[users_email]</td></tr>
-  <tr><td>Пол</td><td>$cat[users_sex]</td></tr>
-  <tr><td>Дата рождения</td><td>$cat[users_birth_date]</td></tr>
+  <tr><td>Пол</td><td>$sex</td></tr>
+  <tr><td>Дата рождения</td><td>$date</td></tr>
   <tr><td>Город</td><td>$cat[users_city]</td></tr>
   <tr><td><a href = account_update.php?users_id=$cat[users_id]&update=1>Редактировать</a></td><td></td></tr>";
   echo"</table>";
@@ -364,6 +514,7 @@ $groups_creator = null, $groups_sex = null, $groups_city = null, $groups_age = n
   '$groups_genre', '$groups_description', '$groups_isvip', '$groups_creator', '$groups_sex',
   '$groups_city', '$groups_age')");
 }
+// Генерация кода вида AAAA-AAAA-AAAA-AAAA.
 function generate_code($seed){
     $key = md5($seed);
     $new_key = '';
@@ -373,6 +524,7 @@ function generate_code($seed){
     }
  return strtoupper($new_key);
  }
+ // Проверка наличия значения в массиве.
  function isInArr($arr, $item){
    foreach($arr as &$value){
      if($value == $item)
@@ -380,6 +532,7 @@ function generate_code($seed){
    }
    return false;
  }
+ // Генерация заданного колличества кодов.
  function generate_codes($count){
    $array = [];
    for($i = 1; $i <= $count; $i++){
@@ -389,12 +542,14 @@ function generate_code($seed){
    }
    return $array;
  }
+ // Печать массива.
  function print_array($arr){
    foreach($arr as &$value){
    echo $value;
    echo '</br>';
    }
  }
+ // Генерация VIP-кодов и скачивание файла с ними.
  function get_vips($connection, $arr){
    if(isset($_POST['get_vips'])){
       $count = $_POST['code_count'];
@@ -433,7 +588,7 @@ function generate_code($seed){
 function remove_code($connection, $code){
   return $query = mysqli_query($connection, "DELETE from vip WHERE vip_code = '$code'");
 }
-
+// Активация кода.
 function activate_code($connection, $code){
   $key = strtoupper($code);
   $query = mysqli_query($connection, "SELECT * from vip WHERE vip_code = '$key'");

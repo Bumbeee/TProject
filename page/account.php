@@ -16,11 +16,11 @@
         <div class="account">
           <div class="my-acc">
             <h2>Моя анкета</h2>
-            <?php user_data_output($connection, 1); ?>
+            <?php user_data_output($connection, $_SESSION['id']); ?>
           </div>
           <div class="my-app">
             <h2>Мои заявки</h2>
-            <?php user_request_output($connection, 1); ?>
+            <?php user_request_output($connection, $_SESSION['id']); ?>
           </div>
         </div>
       </div>
@@ -29,4 +29,3 @@
 
 <script type="text/javascript" src="../js/main.js"></script>
 </body>
-  

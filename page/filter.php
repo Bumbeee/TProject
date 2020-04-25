@@ -14,31 +14,39 @@
         <div class="all_filter">
           <div class="filter">
             <h4>Фильтр</h4>
-            <select class="">
-              <option selected="selected" disabled>Инструмент</option>
+            <form class="filter" method = "post">
+            <select class="" name="instrument">
+              <option selected="selected"  disabled>Инструмент</option>
               <?php setinstruments($connection); ?>
             </select>
-            <select class="">
-              <option selected="selected" disabled>Пол</option>
+            <select class="" name="sex">
+              <option selected="selected"  disabled>Пол</option>
               <option>Мужской</option>
               <option>Женский</option>
             </select>
-            <select class="">
+            <select class="" name="experience">
               <option selected="selected" disabled>Опыт</option>
               <option>< 1 года</option>
               <option>1 - 3 года</option>
               <option>3 - 5 лет</option>
               <option>> 5 лет</option>
             </select>
-            <select class="">
+            <select class="" name="genre">
               <option selected="selected" disabled>Жанр</option>
               <?php setgenres($connection); ?>
             </select>
-            <input type="text" placeholder="Город">
-            <input type="number" placeholder="Возраст">
-            <input type="submit" value="Найти">
+            <input type="text" name="city" placeholder="Город" value="<?php echo $_POST['city']?>">
+            <select class="" name="age">
+              <option selected="selected" disabled>Возраст</option>
+              <option>< 20 лет</option>
+              <option>20-30 лет</option>
+              <option>30-40 лет</option>
+              <option>40-50 лет</option>
+              <option>> 50 лет</option>
+            </select>
+            <input type="submit" name="do_filter" value="Найти">
           </div>
-
+  </form>
             <div class="order">
               <h4>Оставить заявку на поиск</h4>
               <a href="make_requests_musician.php">Поиск музыканта</a>

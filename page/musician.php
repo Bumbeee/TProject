@@ -1,5 +1,6 @@
 <?php   require "db.php";
-  require "functions.php"; ?>
+  require "functions.php";
+  ?>
 <!DOCTYPE html>
 <head>
   <link rel="stylesheet" href="../css/orders.css">
@@ -18,7 +19,12 @@
       <div class="row">
         <h2 class="title">Подберите для себя лучшего музыканта</h2>
         <div class="orders">
-          <?php musicians_request_output($connection); ?>
+          <?php if(isset($_POST["do_filter"])){
+          print_musicians_requests(musicians_by_filter($connection, $_POST));
+        }
+        else
+          print_musicians_requests(all_musicians($connection));
+          ?>
         </div>
       </div>
     </div>

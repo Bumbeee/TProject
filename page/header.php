@@ -22,14 +22,16 @@
                     <li><a href="#">Наша работа</a></li>
                     <li><a href="../admin">Админ</a></li>
                     <li><a href="account.php">Аккаунт</a></li>
-                    <li><a href="logout.php">Выход</a></li>
+                    <?php if(checkisauth($connection))
+                    echo '<li><a href="logout.php">Выход</a></li>'; ?>
                   </ul>
                 </nav>
               </div>
               <div class="register">
                 <ul>
-                  <li><a href="register.php">Регистрация </a></li> /
-                  <li><a href="auth.php">Вход</a></li>
+                  <?php if(!checkisauth($connection))
+                  echo '<li><a href="register.php">Регистрация </a></li> /
+                  <li><a href="auth.php">Вход</a></li>'; ?>
                 </ul>
               </div>
             </div>

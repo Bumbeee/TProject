@@ -747,10 +747,32 @@ function activate_code($connection, $code){
   ];
 }
 
+function checkisadmin($connection)
+{
+  $query = mysqli_query($connection, "SELECT * FROM admins");
+  while($cat = mysqli_fetch_assoc($query))
+  {
+    if ($cat['admins_email'] == $_SESSION['logged_user'])
+    {
+      return true;
+    }
+  }
+  return false;
+}
+
+function checkisauth($connection)
+{
+  if (empty($_SESSION))
+  {
+    return false;
+  }
+  return true;
+}
+
 // function accept($connection, $users_id = null)
 // {
 //   $query = mysqli_query($connection, "UPDATE musicians SET musicians_ismodered = 1
-//      WHERE musicians_creator = '$users_id'");
+//   WHERE musicians_creator = '$users_id'");
 // }
 
 function admins_requsts_output($connection)
@@ -786,9 +808,9 @@ function admins_requsts_output($connection)
       echo "<div class=\"about\">";
       echo "<h4>О себе</h4><p>$cat[musicians_description]</p>";
       echo "</div>";
-      // echo "<input type= 'button' value = 'Одобрить'
-      // onclick = 'accept($connection, $cat[users_id]);'>";
-      //   $i++;
+      echo "<input type= \"button\" value = \"Одобрить\"
+      onclick = \"accept($connection, $cat[users_id]);\">";
+      $i++;
     }
     $query = mysqli_query($connection, "SELECT * FROM groups
     LEFT OUTER JOIN instruments ON groups.groups_instrument = instruments.instruments_id
@@ -823,5 +845,3 @@ function admins_requsts_output($connection)
     }
   }
 ?>
-
-  <script type="text/javascript" src="..admin/js/admin.js"></script>

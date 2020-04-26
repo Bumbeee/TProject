@@ -5,37 +5,35 @@
   if (isset($_POST['save']))
 	{
     $groups_creator = $_SESSION['id'];
-    $groups_name = $_POST['groups_name'];
     $groups_experience = $_POST['groups_experience'];
     $groups_instrument = $_POST['groups_instrument'];
     $groups_genre = $_POST['groups_genre'];
-    $groups_sex = $_POST['groups_sex'];
-    $groups_city = $_POST['groups_city'];
-    $groups_age = $_POST['groups_age'];
     $groups_description = $_POST['groups_description'];
-		make_request_groups($connection, $groups_creator, $groups_name, $groups_experience, $groups_instrument,
-    $groups_genre, $groups_sex, $groups_city, $groups_age, $groups_description);
+		make_request_groups($connection, $groups_creator, $groups_experience, $groups_instrument,
+    $groups_genre, $groups_description);
 	}
 ?>
+<h2>Кажется Вы хотите найти себе группу... Не вопрос!</h2>
+<h4>Заполните несколько полей и мы обязательно подберем для Вас группу</h4>
 
 <form method = "POST">
-  Название группы:
-  <p><input type = "text" name = "groups_name"></p>
-  Опыт:
-  <p><input type = "text" name = "groups_experience"></p>
-  Музыкальный инструмент:
-  <p><input type = "text" name = "groups_instrument"></p>
-  Жанр:
-  <p><input type = "text" name = "groups_genre"></p>
-  Пол:
-  <p><input type = "text" name = "groups_sex"></p>
-  Город:
-  <p><input type = "text" name = "groups_city"></p>
-  Возраст:
-  <p><input type = "text" name = "groups_age"></p>
-  Описание:
-  <p><textarea class="FormElement" name="groups_description"
-  id="groups_description" cols="40" rows="5"></textarea></p>
-	<input type = "connection" name = "connection" value ="$connection" hidden />
-	<input type = "submit" name = "save" class = "button" value = "Добавить"/>
+<select name="groups_instrument">
+  <option selected="selected" disabled>Инструмент</option>
+  <?php setinstruments($connection); ?>
+</select><br>
+<select name="groups_experience">
+  <option selected="selected" disabled>Опыт</option>
+  <option>< 1 года</option>
+  <option>1 - 3 года</option>
+  <option>3 - 5 лет</option>
+  <option>> 5 лет</option>
+</select><br>
+<select name="groups_genre">
+  <option selected="selected" disabled>Жанр</option>
+    <?php setgenres($connection); ?>
+</select><br>
+<textarea name="groups_description" cols="43" rows="5" placeholder="Расскажите о Вашей группе, нам очень интересно!"></textarea><br>
+<h5>Хотите чтобы Вашу заявку увидели первой? Введите VIP-код!</h5>
+<input type="text" placeholder="Промокод вводить сюда!"><br><br>
+<input type = "submit" name = "save" class = "button" value = "Добавить"/>
 </form>

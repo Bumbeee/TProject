@@ -1,26 +1,33 @@
 <?php
 
 function make_request_musicians($connection, $musicians_creator = null, $musicians_experience = null,
-$musicians_instrument = null, $musicians_genre = null, $musicians_description = null)
+$musicians_instrument = null, $musicians_genre = null, $musicians_description = null, $musicians_name = null,
+$musicians_city = null, $musicians_age = null, $musicians_sex = null)
 {
+  if($musicians_sex == "Мужской"){
+    $sex = "man";
+  }
+  if($musicians_sex == "Женский"){
+    $sex = "woman";
+  }
   mysqli_query($connection, 'SET foreign_key_checks = 0');
-  $query = mysqli_query($connection, "INSERT INTO musicians (musicians_creator, musicians_experience, musicians_instrument,
-    musicians_genre, musicians_description) VALUES('$musicians_creator', '$musicians_experience',
-      '$musicians_instrument', '$musicians_genre', '$musicians_description')");
+  $query = mysqli_query($connection, "INSERT INTO groups (groups_creator, groups_experience,
+    groups_name, groups_instrument, groups_genre, groups_description, groups_city, groups_age, groups_sex) VALUES
+    ('$musicians_creator', '$musicians_experience', '$musicians_name', '$musicians_instrument', '$musicians_genre',
+      '$musicians_description', '$musicians_city', '$musicians_age', '$sex')");
   header("Location: ../");
 }
 
-function make_request_groups($connection, $groups_creator = null, $groups_name = null,
-$groups_experience = null, $groups_instrument = null, $groups_genre = null,
-$groups_sex = null, $groups_city = null, $groups_age = null, $groups_description = null)
+function make_request_groups($connection, $groups_creator = null, $groups_experience = null,
+$groups_instrument = null, $groups_genre = null, $groups_description = null)
 {
   mysqli_query($connection, 'SET foreign_key_checks = 0');
-  $query = mysqli_query($connection, "INSERT INTO groups (groups_creator, groups_name, groups_experience,
-    groups_instrument, groups_genre, groups_sex, groups_city, groups_age, groups_description)
-    VALUES('$groups_creator', '$groups_name', '$groups_experience', '$groups_instrument',
-      '$groups_genre', '$groups_sex', '$groups_city', '$groups_age', '$groups_description')");
+  $query = mysqli_query($connection, "INSERT INTO musicians (musicians_creator, musicians_experience,
+  musicians_instrument, musicians_genre, musicians_description) VALUES('$groups_creator',
+      '$groups_experience', '$groups_instrument', '$groups_genre', '$groups_description')");
   header("Location: ../");
 }
+
 // Регистрация.
 function do_register($connection, $arr){
   if(isset($arr["do_submit"])){
@@ -142,7 +149,7 @@ function print_musicians_requests($requests){
       $sex = "Мужской";
     }
     if($cat["users_sex"] == "woman"){
-      $sex = "Женщина";
+      $sex = "Женский";
     }
     echo "<div class=\"box\">";
     echo "<h2>$cat[users_surname] $cat[users_name]</h2>";

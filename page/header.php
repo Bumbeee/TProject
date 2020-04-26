@@ -24,7 +24,7 @@
                     {
                       echo '<li><a href="../admin">Админ</a></li>';
                     } ?>
-                    <?php if(isset($_SESSION['logged_user']))
+                    <?php if(isset($_SESSION["id"]))
                     {
                     echo '<li><a href="account.php">Аккаунт</a></li>';
                   } ?>
@@ -33,7 +33,7 @@
               </div>
               <div class="register">
                 <ul>
-                  <?php if(isset($_SESSION['logged_user']))
+                  <?php if(isset($_SESSION["id"]))
                   {
                     echo '<li><a href="logout.php">Выход</a></li>';
                   }

@@ -760,20 +760,11 @@ function checkisadmin($connection)
   return false;
 }
 
-function checkisauth($connection)
+function accept($connection, $musicians_id = null)
 {
-  if (empty($_SESSION))
-  {
-    return false;
-  }
-  return true;
+  $query = mysqli_query($connection, "UPDATE musicians SET musicians_ismodered = 1
+  WHERE musicians_id = '$musicians_id'");
 }
-
-// function accept($connection, $users_id = null)
-// {
-//   $query = mysqli_query($connection, "UPDATE musicians SET musicians_ismodered = 1
-//   WHERE musicians_creator = '$users_id'");
-// }
 
 function admins_requsts_output($connection)
   {
@@ -809,7 +800,7 @@ function admins_requsts_output($connection)
       echo "<h4>О себе</h4><p>$cat[musicians_description]</p>";
       echo "</div>";
       echo "<input type= \"button\" value = \"Одобрить\"
-      onclick = \"accept($connection, $cat[users_id]);\">";
+      onclick = \"accept($connection, $cat[musicians_id]);\">";
       $i++;
     }
     $query = mysqli_query($connection, "SELECT * FROM groups

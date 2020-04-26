@@ -35,6 +35,7 @@ $arr = get_vips($connection, $_POST);
   </div>
 </div>
 
+<?php admins_requsts_output($connection); ?>
 
 <script src="js/main.js"></script>
 <script type="text/javascript" src="../libs/jquery/jquery-1.11.1.min.js"></script>

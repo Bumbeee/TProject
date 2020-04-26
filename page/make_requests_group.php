@@ -32,7 +32,7 @@
   <option selected="selected" disabled>Жанр</option>
     <?php setgenres($connection); ?>
 </select><br>
-<textarea name="groups_description" cols="43" rows="5" placeholder="Расскажите о Вашей группе, нам очень интересно!"></textarea><br>
+<textarea name="groups_description" cols="43" rows="5" placeholder="Расскажите о себе, нам очень интересно!"></textarea><br>
 <h5>Хотите чтобы Вашу заявку увидели первой? Введите VIP-код!</h5>
 <input type="text" placeholder="Промокод вводить сюда!"><br><br>
 <input type = "submit" name = "save" class = "button" value = "Добавить"/>

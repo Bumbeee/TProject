@@ -1,5 +1,5 @@
 <?php
-
+// Создание заявки на поиск музыканта
 function make_request_musicians($connection, $musicians_creator = null, $musicians_experience = null,
 $musicians_instrument = null, $musicians_genre = null, $musicians_description = null, $musicians_name = null,
 $musicians_city = null, $musicians_age = null, $musicians_sex = null)
@@ -17,7 +17,7 @@ $musicians_city = null, $musicians_age = null, $musicians_sex = null)
       '$musicians_description', '$musicians_city', '$musicians_age', '$sex')");
   header("Location: ../");
 }
-
+// Создание заявки на поиск группы
 function make_request_groups($connection, $groups_creator = null, $groups_experience = null,
 $groups_instrument = null, $groups_genre = null, $groups_description = null)
 {
@@ -144,6 +144,8 @@ function print_musicians_requests($requests){
   $i = 1;
   foreach($requests as $cat)
   {
+    if ($cat['musicians_ismodered'] == 1)
+    {
     $age = get_age($cat["users_birth_date"]);
     if($cat["users_sex"] == "man"){
       $sex = "Мужской";
@@ -181,6 +183,7 @@ function print_musicians_requests($requests){
     echo "</div>";
     $i++;
   }
+}
 }
 }
 // Массив всех заявок музыкантов.
@@ -279,6 +282,8 @@ function print_groups_requests($requests){
   $i = 1;
   foreach($requests as $cat)
   {
+    if ($cat['groups_ismodered'] == true)
+    {
     if($cat["groups_sex"] == "man"){
       $sex = "Мужской";
     }
@@ -317,6 +322,10 @@ function print_groups_requests($requests){
   }
 }
 }
+}
+
+
+
 // Массив всех заявок групп.
 function all_groups($connection){
   $requests = [];
@@ -737,4 +746,82 @@ function activate_code($connection, $code){
     'message' => $message,
   ];
 }
+
+// function accept($connection, $users_id = null)
+// {
+//   $query = mysqli_query($connection, "UPDATE musicians SET musicians_ismodered = 1
+//      WHERE musicians_creator = '$users_id'");
+// }
+
+function admins_requsts_output($connection)
+  {
+    $query = mysqli_query($connection, "SELECT * FROM musicians
+    LEFT OUTER JOIN instruments ON musicians.musicians_instrument = instruments.instruments_id
+    LEFT OUTER JOIN users ON musicians.musicians_creator = users.users_id
+    LEFT OUTER JOIN genres ON musicians.musicians_genre = genres.genres_id
+    WHERE musicians_ismodered = 0");
+    $i = 1;
+    while ($cat = mysqli_fetch_assoc($query))
+    {
+      if($cat["users_sex"] == "man"){
+        $sex = "Мужской";
+      }
+      if($cat["users_sex"] == "woman"){
+        $sex = "Женский";
+      }
+      $age = get_age($cat["users_birth_date"]);
+      echo "<div class=\"box\">";
+      echo "<h2>$cat[users_surname] $cat[users_name]</h2>";
+      echo "<img src='../img/".$cat['instruments_picture']."' />";
+      echo "<div class=\"info\">";
+      echo "<ul>
+        <li>Пол: $sex</li>
+        <li>Возраст: $age</li>
+        <li>Инструмент: $cat[instruments_name]</li>
+        <li>Опыт: $cat[musicians_experience]</li>
+        <li>Жанр: $cat[genres_name]</li>
+        <li>Город: $cat[users_city]</li>
+      </ul>";
+      echo "</div>";
+      echo "<div class=\"about\">";
+      echo "<h4>О себе</h4><p>$cat[musicians_description]</p>";
+      echo "</div>";
+      // echo "<input type= 'button' value = 'Одобрить'
+      // onclick = 'accept($connection, $cat[users_id]);'>";
+      //   $i++;
+    }
+    $query = mysqli_query($connection, "SELECT * FROM groups
+    LEFT OUTER JOIN instruments ON groups.groups_instrument = instruments.instruments_id
+    LEFT OUTER JOIN users ON groups.groups_creator = users.users_id
+    LEFT OUTER JOIN genres ON groups.groups_genre = genres.genres_id");
+    while ($cat = mysqli_fetch_assoc($query))
+    {
+      if($cat["groups_sex"] == "man"){
+        $sex = "Мужской";
+      }
+      if($cat["groups_sex"] == "woman"){
+        $sex = "Женский";
+      }
+      echo "<div class=\"box\">";
+      echo "<h2>$cat[groups_name]</h2>";
+      echo "<img src='../img/".$cat['instruments_picture']."' />";
+      echo "<div class=\"info\">";
+      echo "<ul>
+        <li>Пол: $sex</li>
+        <li>Возраст: $cat[groups_age]</li>
+        <li>Инструмент: $cat[instruments_name]</li>
+        <li>Опыт: $cat[groups_experience]</li>
+        <li>Жанр: $cat[genres_name]</li>
+        <li>Город: $cat[groups_city]</li>
+      </ul>";
+      echo "</div>";
+      echo "<div class=\"about\">";
+      echo "<h4>О группе</h4><p>$cat[groups_description]</p>";
+      echo "</div>";
+      // echo "<input type='button' value='Одобрить'>";
+        $i++;
+    }
+  }
 ?>
+
+  <script type="text/javascript" src="..admin/js/admin.js"></script>

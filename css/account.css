@@ -186,13 +186,13 @@ h1{
 }
 
 
-.edit{
+.edit-data{
   text-align: center;
   font-family: 'Proxima Nova Regular';
   font-size: 18px;
 }
 
-.edit input{
+.edit-data input{
   outline: none;
   border: none;
   border-bottom: 2px solid #d9d9d9;
@@ -200,11 +200,11 @@ h1{
   text-align: center;
 }
 
-.edit span{
+.edit-data span{
   text-align: center;
 }
 
-.edit button{
+.edit-data button{
   outline: none!important;
   border: none;
   color: #fff;
@@ -214,7 +214,7 @@ h1{
   transition: 0.5s;
 }
 
-.edit button:hover{
+.edit-data button:hover{
   background-color: #d14351;
 }
 

@@ -7,6 +7,6 @@
 
 <body>
   <script type="text/javascript" src="../js/main.js"></script>
-  <?php require("../pages/header.php"); ?>
-  Привет всем!!
+  <?php require("../page/header.php"); ?>
+  Главная страница на доработке!!
 </body>

@@ -17,6 +17,7 @@
               <div class="menu">
                 <nav>
                   <ul>
+                    <li><a href="../">Главная</a></li>
                     <li><a href="musician.php">Музыканты</a></li>
                     <li><a href="group.php">Группы</a></li>
                   </ul>
@@ -24,6 +25,7 @@
               </div>
               <div class="register">
                 <ul>
+<<<<<<< HEAD
                   <?php if(checkisadmin($connection))
                   {
                   echo '<li><a href="../admin">Админ</a></li>';
@@ -31,6 +33,11 @@
                   <?php if(isset($_SESSION["id"]))
                   {
                   echo '<li><a href="account.php">Аккаунт</a></li> |';
+=======
+                  <?php if(isset($_SESSION["id"]))
+                  {
+                  echo '<li><a href="account.php">Аккаунт |</a></li>';
+>>>>>>> d98f63aa47207d64833d40241281f05e6a6586fb
                 } ?>
                   <?php if(isset($_SESSION["id"]))
                   {

@@ -25,10 +25,7 @@
               </div>
               <div class="register">
                 <ul>
-                  <?php if(checkisadmin($connection))
-                  {
-                  echo '<li><a href="../admin">Админ</a></li>';
-                  } ?>
+                <li><a href="../admin">Админ</a></li>
                   <?php if(isset($_SESSION["id"]))
                   {
                   echo '<li><a href="account.php">Аккаунт |</a></li>';

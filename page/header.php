@@ -25,7 +25,6 @@
               </div>
               <div class="register">
                 <ul>
-                <li><a href="../admin">Админ</a></li>
                   <?php if(isset($_SESSION["id"]))
                   {
                   echo '<li><a href="account.php">Аккаунт |</a></li>';

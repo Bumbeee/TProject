@@ -1,31 +1,34 @@
+<?php
+require "db.php";
+require "functions.php";
+if(!isset($_SESSION["id"])){
+  header("Location: auth.php");
+    exit();
+}
+if (isset($_POST['save']))
+{
+  $musicians_creator = $_SESSION['id'];
+  $musicians_experience = $_POST['musicians_experience'];
+  $musicians_instrument = $_POST['musicians_instrument'];
+  $musicians_genre = $_POST['musicians_genre'];
+  $musicians_description = $_POST['musicians_description'];
+
+  $musicians_name = $_POST['musicians_name'];
+  $musicians_city = $_POST['musicians_city'];
+  $musicians_age = $_POST['musicians_age'];
+  $musicians_sex = $_POST['musicians_sex'];
+
+  make_request_musicians($connection, $musicians_creator, $musicians_experience,
+  $musicians_instrument, $musicians_genre, $musicians_description, $musicians_name, $musicians_city,
+  $musicians_age, $musicians_sex);
+}
+?>
 <!DOCTYPE html>
 <head>
   <link rel="stylesheet" href="../css/request.css">
   <link rel="stylesheet" href="../libs/bootstrap/bootstrap-grid-3.3.1.min.css" />
 </head>
 <body>
-  <?php
-    require "db.php";
-    require "functions.php";
-
-    if (isset($_POST['save']))
-  	{
-      $musicians_creator = $_SESSION['id'];
-      $musicians_experience = $_POST['musicians_experience'];
-      $musicians_instrument = $_POST['musicians_instrument'];
-      $musicians_genre = $_POST['musicians_genre'];
-  		$musicians_description = $_POST['musicians_description'];
-
-      $musicians_name = $_POST['musicians_name'];
-      $musicians_city = $_POST['musicians_city'];
-      $musicians_age = $_POST['musicians_age'];
-      $musicians_sex = $_POST['musicians_sex'];
-
-  		make_request_musicians($connection, $musicians_creator, $musicians_experience,
-      $musicians_instrument, $musicians_genre, $musicians_description, $musicians_name, $musicians_city,
-      $musicians_age, $musicians_sex);
-  	}
-  ?>
   <?php require("header.php"); ?>
   <div class="container">
     <div class="col-md-12">

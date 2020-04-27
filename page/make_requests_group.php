@@ -1,24 +1,28 @@
+<?php
+  require "db.php";
+  require "functions.php";
+  if(!isset($_SESSION["id"])){
+    header("Location: auth.php");
+      exit();
+  }
+
+  if (isset($_POST['save']))
+  {
+    $groups_creator = $_SESSION['id'];
+    $groups_experience = $_POST['groups_experience'];
+    $groups_instrument = $_POST['groups_instrument'];
+    $groups_genre = $_POST['groups_genre'];
+    $groups_description = $_POST['groups_description'];
+    make_request_groups($connection, $groups_creator, $groups_experience, $groups_instrument,
+    $groups_genre, $groups_description);
+  }
+?>
 <!DOCTYPE html>
 <head>
   <link rel="stylesheet" href="../css/request.css">
   <link rel="stylesheet" href="../libs/bootstrap/bootstrap-grid-3.3.1.min.css" />
 </head>
 <body>
-  <?php
-    require "db.php";
-    require "functions.php";
-
-    if (isset($_POST['save']))
-  	{
-      $groups_creator = $_SESSION['id'];
-      $groups_experience = $_POST['groups_experience'];
-      $groups_instrument = $_POST['groups_instrument'];
-      $groups_genre = $_POST['groups_genre'];
-      $groups_description = $_POST['groups_description'];
-  		make_request_groups($connection, $groups_creator, $groups_experience, $groups_instrument,
-      $groups_genre, $groups_description);
-  	}
-  ?>
   <?php require("header.php"); ?>
   <div class="container">
     <div class="col-md-12">

@@ -76,7 +76,7 @@
   <div class="col-md-12">
     <div class="row">
       <div class="edit-data">
-        <h2>Редактирование данных личного кабинета</h2>
+        <h2>Редактирование данных личного кабинета</h2> 
         <form action = "account_update.php?users_id=<?php echo $_GET['users_id']; ?>" method = "POST">
         <p><span>Имя</span><br><input type = "text" name = "users_name" value = "<?php echo @$data['users_name']; ?>" required></p>
         <p><span>Фамилия</span><br><input type = "text" name = "users_surname" value = "<?php echo @$data['users_surname']; ?>" required></p>

@@ -5,6 +5,10 @@ if(!isset($_SESSION["id"])){
   header("Location: auth.php");
     exit();
 }
+if(checkisadmin($connection)){
+  header("Location: ../admin");
+  exit();
+}
 if (isset($_POST['save']))
 {
   $musicians_creator = $_SESSION['id'];

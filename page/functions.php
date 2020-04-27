@@ -750,6 +750,11 @@ function accept($connection, $musicians_id = null)
   WHERE musicians_id = '$musicians_id'");
 }
 
+function reject($connection, $musicians_id = null)
+{
+  $query = mysqli_query($connection, "DELETE FROM musicians WHERE musicians_id = '$musicians_id'");
+}
+
 function admins_requsts_output($connection)
   {
     $query = mysqli_query($connection, "SELECT * FROM musicians
@@ -785,10 +790,16 @@ function admins_requsts_output($connection)
       echo "</div>";
       echo "<form method='post'>
             <input type = 'submit' name = 'accept-$cat[musicians_id]' value = 'Одобрить'>
+            <input type = 'submit' name = 'reject-$cat[musicians_id]' value = 'Отклонить'>
             </form>";
             if(isset($_POST['accept-'.$cat[musicians_id]]))
             {
             accept($connection, $cat[musicians_id]);
+            echo "<meta http-equiv='refresh' content='0'>";
+            }
+            if(isset($_POST['reject-'.$cat[musicians_id]]))
+            {
+            reject($connection, $cat[musicians_id]);
             echo "<meta http-equiv='refresh' content='0'>";
             }
     }

@@ -70,8 +70,11 @@
 <p><input type = "text" name = "users_surname" value = "<?php echo @$data['users_surname']; ?>"></p>
 Email:
 <p><input type = "email" name = "users_email" value = "<?php echo @$data['users_email']; ?>"></p>
-Пол:
-<p><input type = "text" name = "users_sex" value = "<?php echo @$data['users_sex']; ?>"></p>
+<div class="sex">
+  <p>Пол:</p>
+  <p><input type="radio" name="gender" value="man" required>Мужчина</p>
+  <p><input type="radio" name="gender" value="woman">Женщина</p>
+</div>
 Дата рождения:
 <p><input type = "date" name = "users_birth_date" value = "<?php echo @$data['users_birth_date']; ?>"></p>
 Город:

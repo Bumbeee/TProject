@@ -15,6 +15,7 @@ body{
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   font-family: 'Proxima Nova Regular';
 }
 
@@ -31,6 +32,7 @@ body{
   width: 85%;
   align-items: center;
   padding: 0 40px 20px;
+  margin-bottom: 50px;
 }
 
 .box:nth-child(odd){
@@ -59,11 +61,15 @@ body{
 }
 
 .info{
-  flex-basis: 25%;
+  flex-basis: 30%;
 }
 
 .about{
-  flex-basis: 54.5%;
+  flex-basis: 49.5%;
+}
+
+.about p{
+  text-align: center;
 }
 
 .about h4{

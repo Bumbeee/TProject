@@ -9,7 +9,7 @@
 <script src="js/main.js"></script>
 
       <div class="logo">
-        <a href="page/work.php"><img src="img/logo.png" alt=""></a>
+        <a href="index.php"><img src="img/logo.png" alt=""></a>
       </div>
       <div class="main">
         <a href="page/musician.php"><img src="img/mus.jpg" alt=""></a>

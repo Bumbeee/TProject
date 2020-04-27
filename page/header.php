@@ -17,6 +17,7 @@
               <div class="menu">
                 <nav>
                   <ul>
+                    <li><a href="../">Главная</a></li>
                     <li><a href="musician.php">Музыканты</a></li>
                     <li><a href="group.php">Группы</a></li>
                   </ul>
@@ -30,8 +31,8 @@
                   } ?>
                   <?php if(isset($_SESSION["id"]))
                   {
-                  echo '<li><a href="account.php">Аккаунт</a></li>';
-                } ?> |
+                  echo '<li><a href="account.php">Аккаунт |</a></li>';
+                } ?>
                   <?php if(isset($_SESSION["id"]))
                   {
                     echo '<li><a href="logout.php">Выход</a></li>';

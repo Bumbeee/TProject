@@ -18,6 +18,10 @@
   justify-content: space-around;
 }
 
+.logo{
+  flex-grow: 1;
+}
+
 .logo img{
   max-height: 100px;
 }
@@ -27,6 +31,7 @@
   justify-content: space-between;
   font-size: 18px;
   font-family: 'Proxima Nova Bold';
+	flex-grow: 3;
 }
 
 .register a{

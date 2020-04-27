@@ -25,28 +25,18 @@
               </div>
               <div class="register">
                 <ul>
-<<<<<<< HEAD
-                  <?php if(checkisadmin($connection))
-                  {
-                  echo '<li><a href="../admin">Админ</a></li>';
-                  } ?>
-                  <?php if(isset($_SESSION["id"]))
-                  {
-                  echo '<li><a href="account.php">Аккаунт</a></li> |';
-=======
                   <?php if(isset($_SESSION["id"]))
                   {
                   echo '<li><a href="account.php">Аккаунт |</a></li>';
->>>>>>> d98f63aa47207d64833d40241281f05e6a6586fb
-                } ?>
+                  } ?>
                   <?php if(isset($_SESSION["id"]))
                   {
-                    echo '<li><a href="logout.php">Выход</a></li>';
+                  echo '<li><a href="logout.php">Выход</a></li>';
                   }
                   else
                   {
-                    echo '<li><a href="register.php">Регистрация </a></li> /
-                    <li><a href="auth.php">Вход</a></li>';
+                  echo '<li><a href="register.php">Регистрация </a></li> /
+                  <li><a href="auth.php">Вход</a></li>';
                   } ?>
                 </ul>
               </div>

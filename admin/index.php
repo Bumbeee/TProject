@@ -37,7 +37,7 @@ $arr = get_vips($connection, $_POST);
 
 <?php admins_requsts_output($connection); ?>
 
-<script src="js/main.js"></script>
+<script src="js/admin.js"></script>
 <script type="text/javascript" src="../libs/jquery/jquery-1.11.1.min.js"></script>
 <script src="../libs/remodal/remodal.min.js"></script>
 </body>

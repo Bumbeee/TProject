@@ -17,7 +17,7 @@ $(document).on('click' , '#gr_find', function(){
 		$('.vipcode').val('');
 
     $.ajax({
-        url: "../page/functions.php?action=musicians_request",
+        url: "functions.php?action=musicians_request",
         type: "POST",
         data: {instrument:instrument, experience:experience, genre:genre, about_you:about_you, vipcode:vipcode},
         success: function(result) {

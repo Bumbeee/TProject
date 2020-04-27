@@ -1,0 +1,9 @@
+.block{
+  text-align: center;
+}
+
+.block h2, .block h4, .block h5{
+  margin-block-start: 10px;
+  margin-block-end: 10px;
+  padding-inline-start: 0px;
+}

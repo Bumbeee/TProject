@@ -2,8 +2,13 @@
 // Создание заявки на поиск музыканта
 function make_request_musicians($connection, $musicians_creator = null, $musicians_experience = null,
 $musicians_instrument = null, $musicians_genre = null, $musicians_description = null, $musicians_name = null,
-$musicians_city = null, $musicians_age = null, $musicians_sex = null)
+$musicians_city = null, $musicians_age = null, $musicians_sex = null, $vipcode = null)
 {
+  $isvip = 0;
+  if ($vipcode['status'] == TRUE )
+  {
+    $isvip = 1;
+  }
   if($musicians_sex == "Мужской"){
     $sex = "man";
   }
@@ -15,22 +20,27 @@ $musicians_city = null, $musicians_age = null, $musicians_sex = null)
 
   if ($musicians_name == null)
     echo 'Введите название группы';
-    else {
-  $query = mysqli_query($connection, "INSERT INTO groups (groups_creator, groups_experience,
-    groups_name, groups_instrument, groups_genre, groups_description, groups_city, groups_age, groups_sex) VALUES
-    ('$musicians_creator', '$musicians_experience', '$musicians_name', '$musicians_instrument', '$musicians_genre',
-      '$musicians_description', '$musicians_city', '$musicians_age', '$sex')");
-  header("Location: ../");
-}
+  else {
+      $query = mysqli_query($connection, "INSERT INTO groups (groups_creator, groups_experience, groups_name,
+        groups_instrument, groups_genre, groups_description, groups_city, groups_age, groups_sex, groups_isvip) VALUES
+        ('$musicians_creator', '$musicians_experience', '$musicians_name', '$musicians_instrument', '$musicians_genre',
+        '$musicians_description', '$musicians_city', '$musicians_age', '$sex', '$isvip')");
+        header("Location: ../");
+  }
 }
 // Создание заявки на поиск группы
 function make_request_groups($connection, $groups_creator = null, $groups_experience = null,
-$groups_instrument = null, $groups_genre = null, $groups_description = null)
+$groups_instrument = null, $groups_genre = null, $groups_description = null, $vipcode = null)
 {
+  $isvip = 0;
+  if ($vipcode['status'] == TRUE )
+  {
+    $isvip = 1;
+  }
   mysqli_query($connection, 'SET foreign_key_checks = 0');
   $query = mysqli_query($connection, "INSERT INTO musicians (musicians_creator, musicians_experience,
-  musicians_instrument, musicians_genre, musicians_description) VALUES('$groups_creator',
-      '$groups_experience', '$groups_instrument', '$groups_genre', '$groups_description')");
+  musicians_instrument, musicians_genre, musicians_description, musicians_isvip) VALUES('$groups_creator',
+      '$groups_experience', '$groups_instrument', '$groups_genre', '$groups_description', '$isvip')");
   header("Location: ../");
 }
 

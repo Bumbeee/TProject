@@ -15,9 +15,12 @@
     $musicians_age = $_POST['musicians_age'];
     $musicians_sex = $_POST['musicians_sex'];
 
+    $vipcode = $_POST['vipcode'];
+    $arr = activate_code($connection, $vipcode);
+
 		make_request_musicians($connection, $musicians_creator, $musicians_experience,
     $musicians_instrument, $musicians_genre, $musicians_description, $musicians_name, $musicians_city,
-    $musicians_age, $musicians_sex);
+    $musicians_age, $musicians_sex, $arr);
 	}
 ?>
 <h2>Ищете музыканта? Тогда Вы по адресу!</h2>
@@ -60,6 +63,6 @@
 <input type="text" id="musicians_city" name="musicians_city" value=""><br>
 <textarea name="musicians_description" cols="43" rows="5" placeholder="Расскажите о Вашей группе, нам очень интересно!"></textarea><br>
 <h5>Хотите чтобы Вашу заявку увидели первой? Введите VIP-код!</h5>
-<input type="text" placeholder="Промокод вводить сюда!"><br><br>
+<input type="text" name ="vipcode" placeholder="Промокод вводить сюда!"><br><br>
 <input type = "submit" name = "save" class = "button" value = "Добавить"/>
 </form>

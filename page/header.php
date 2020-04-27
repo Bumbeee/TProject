@@ -22,12 +22,12 @@
                     <li><a href="#">Наша работа</a></li>
                     <?php if(checkisadmin($connection))
                     {
-                      echo '<li><a href="../admin">Админ</a></li>';
+                    echo '<li><a href="../admin">Админ</a></li>';
                     } ?>
                     <?php if(isset($_SESSION["id"]))
                     {
                     echo '<li><a href="account.php">Аккаунт</a></li>';
-                  } ?>
+                    } ?>
                   </ul>
                 </nav>
               </div>

@@ -31,6 +31,7 @@
 </select><br>
 <select name="musicians_experience">
   <option selected="selected" disabled>Опыт</option>
+  <option>Любой</option>
   <option>< 1 года</option>
   <option>1 - 3 года</option>
   <option>3 - 5 лет</option>
@@ -42,11 +43,13 @@
 </select><br>
 <select name="musicians_sex">
   <option selected="selected" disabled>Пол</option>
+  <option>Любой</option>
   <option>Мужской</option>
   <option>Женский</option>
 </select><br>
 <select name="musicians_age">
   <option selected="selected" disabled>Возраст</option>
+  <option>Любой</option>
   <option>< 20 лет</option>
   <option>20 - 30 лет</option>
   <option>30 - 40 лет</option>

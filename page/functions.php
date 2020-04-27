@@ -744,18 +744,29 @@ function checkisadmin($connection)
   return false;
 }
 
-function accept($connection, $musicians_id = null)
+function acceptm($connection, $musicians_id = null)
 {
   $query = mysqli_query($connection, "UPDATE musicians SET musicians_ismodered = 1
   WHERE musicians_id = '$musicians_id'");
 }
 
-function reject($connection, $musicians_id = null)
+function rejectm($connection, $musicians_id = null)
 {
   $query = mysqli_query($connection, "DELETE FROM musicians WHERE musicians_id = '$musicians_id'");
 }
 
-function admins_requsts_output($connection)
+function acceptg($connection, $groups_id = null)
+{
+  $query = mysqli_query($connection, "UPDATE groups SET groups_ismodered = 1
+  WHERE groups_id = '$groups_id'");
+}
+
+function rejectg($connection, $groups_id = null)
+{
+  $query = mysqli_query($connection, "DELETE FROM groups WHERE groups_id = '$groups_id'");
+}
+
+function admins_requsts_output_mus($connection)
   {
     $query = mysqli_query($connection, "SELECT * FROM musicians
     LEFT OUTER JOIN instruments ON musicians.musicians_instrument = instruments.instruments_id
@@ -789,51 +800,68 @@ function admins_requsts_output($connection)
       echo "<h4>О себе</h4><p>$cat[musicians_description]</p>";
       echo "</div>";
       echo "<form method='post'>
-            <input type = 'submit' name = 'accept-$cat[musicians_id]' value = 'Одобрить'>
-            <input type = 'submit' name = 'reject-$cat[musicians_id]' value = 'Отклонить'>
+            <input type = 'submit' name = 'acceptm-$cat[musicians_id]' value = 'Одобрить'>
+            <input type = 'submit' name = 'rejectm-$cat[musicians_id]' value = 'Отклонить'>
             </form>";
-            if(isset($_POST['accept-'.$cat[musicians_id]]))
+            if(isset($_POST['acceptm-'.$cat[musicians_id]]))
             {
-            accept($connection, $cat[musicians_id]);
+            acceptm($connection, $cat[musicians_id]);
             echo "<meta http-equiv='refresh' content='0'>";
             }
-            if(isset($_POST['reject-'.$cat[musicians_id]]))
+            if(isset($_POST['rejectm-'.$cat[musicians_id]]))
             {
-            reject($connection, $cat[musicians_id]);
+            rejectm($connection, $cat[musicians_id]);
             echo "<meta http-equiv='refresh' content='0'>";
             }
     }
+  }
 
-    // $query = mysqli_query($connection, "SELECT * FROM groups
-    // LEFT OUTER JOIN instruments ON groups.groups_instrument = instruments.instruments_id
-    // LEFT OUTER JOIN users ON groups.groups_creator = users.users_id
-    // LEFT OUTER JOIN genres ON groups.groups_genre = genres.genres_id");
-    // while ($cat = mysqli_fetch_assoc($query))
-    // {
-    //   if($cat["groups_sex"] == "man"){
-    //     $sex = "Мужской";
-    //   }
-    //   if($cat["groups_sex"] == "woman"){
-    //     $sex = "Женский";
-    //   }
-    //   echo "<div class=\"box\">";
-    //   echo "<h2>$cat[groups_name]</h2>";
-    //   echo "<img src='../img/".$cat['instruments_picture']."' />";
-    //   echo "<div class=\"info\">";
-    //   echo "<ul>
-    //     <li>Пол: $sex</li>
-    //     <li>Возраст: $cat[groups_age]</li>
-    //     <li>Инструмент: $cat[instruments_name]</li>
-    //     <li>Опыт: $cat[groups_experience]</li>
-    //     <li>Жанр: $cat[genres_name]</li>
-    //     <li>Город: $cat[groups_city]</li>
-    //   </ul>";
-    //   echo "</div>";
-    //   echo "<div class=\"about\">";
-    //   echo "<h4>О группе</h4><p>$cat[groups_description]</p>";
-    //   echo "</div>";
-    //   // echo "<input type='button' value='Одобрить'>";
-    //     $i++;
-    // }
+  function admins_requsts_output_gr($connection)
+  {
+    $query = mysqli_query($connection, "SELECT * FROM groups
+    LEFT OUTER JOIN instruments ON groups.groups_instrument = instruments.instruments_id
+    LEFT OUTER JOIN users ON groups.groups_creator = users.users_id
+    LEFT OUTER JOIN genres ON groups.groups_genre = genres.genres_id
+    WHERE groups_ismodered = 0");
+    while ($cat = mysqli_fetch_assoc($query))
+    {
+      if($cat["groups_sex"] == "man"){
+        $sex = "Мужской";
+      }
+      else if($cat["groups_sex"] == "woman"){
+        $sex = "Женский";
+      }
+      else $sex = "Любой";
+      echo "<div class=\"box\">";
+      echo "<h2>$cat[groups_name]</h2>";
+      echo "<img src='../img/".$cat['instruments_picture']."' />";
+      echo "<div class=\"info\">";
+      echo "<ul>
+        <li>Пол: $sex</li>
+        <li>Возраст: $cat[groups_age]</li>
+        <li>Инструмент: $cat[instruments_name]</li>
+        <li>Опыт: $cat[groups_experience]</li>
+        <li>Жанр: $cat[genres_name]</li>
+        <li>Город: $cat[groups_city]</li>
+      </ul>";
+      echo "</div>";
+      echo "<div class=\"about\">";
+      echo "<h4>О группе</h4><p>$cat[groups_description]</p>";
+      echo "</div>";
+      echo "<form method='post'>
+            <input type = 'submit' name = 'acceptg-$cat[groups_id]' value = 'Одобрить'>
+            <input type = 'submit' name = 'rejectg-$cat[groups_id]' value = 'Отклонить'>
+            </form>";
+            if(isset($_POST['acceptg-'.$cat[groups_id]]))
+            {
+            acceptg($connection, $cat[groups_id]);
+            echo "<meta http-equiv='refresh' content='0'>";
+            }
+            if(isset($_POST['rejectg-'.$cat[groups_id]]))
+            {
+            rejectg($connection, $cat[groups_id]);
+            echo "<meta http-equiv='refresh' content='0'>";
+            }
+    }
   }
 ?>

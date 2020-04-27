@@ -267,21 +267,8 @@ function musicians_by_filter($connection, $arr){
       $temp = filter_by($temp, "users_sex", $sex);
       $temp = filter_by($temp, "instruments_id", $arr["instrument"]);
       $temp = filter_by($temp, "genres_id", $arr["genre"]);
-
+      $temp = filter_by($temp, "musicians_experience", $arr["experience"]);
       $res = $temp;
-      $temp = [];
-      if(!empty($arr["experience"])){
-         foreach($res as &$item){
-           if(($arr["experience"] == "< 1 года1 - 3 года" && $item["musicians_experience"] < 1)
-           || ($arr["experience"] == "1 - 3 года" && $item["musicians_experience"] >= 1 && $item["musicians_experience"] < 3)
-           || ($arr["experience"] == "3 - 5 лет" && $item["musicians_experience"] >= 3 && $item["musicians_experience"] < 5)
-           || ($arr["experience"] == "> 5 лет" && $item["musicians_experience"] >= 5)
-         ){
-            array_push($temp, $item);
-         }
-       }
-      $res = $temp;
-      }
       $temp = [];
       if(!empty($arr["age"])){
          foreach($res as &$item){
@@ -299,15 +286,6 @@ function musicians_by_filter($connection, $arr){
      }
    }
    return $res;
-   /*print_musicians_requests($res);
-   return [
-     "sex" => $arr["sex"],
-     "age" => $arr["age"],
-     "experience" => $arr["experience"],
-     "instrument" => $arr["instrument"],
-     "genre" => $arr["genre"],
-     "city" => $arr["city"],
-   ];*/
 }
 
 // Выовод массива заявок групп.

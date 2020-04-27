@@ -1,4 +1,13 @@
-<?php   require "db.php"; require "functions.php"; ?>
+<?php   require "db.php"; require "functions.php";
+if(checkisadmin($connection)){
+  header("Location: ../admin");
+    exit();
+}
+if(!isset($_SESSION["id"])){
+  header("Location: ../index.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <head>
   <link rel="stylesheet" href="../css/account.css">

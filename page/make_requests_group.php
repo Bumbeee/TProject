@@ -9,8 +9,13 @@
     $groups_instrument = $_POST['groups_instrument'];
     $groups_genre = $_POST['groups_genre'];
     $groups_description = $_POST['groups_description'];
+    $vipcode = $_POST['vipcode'];
+
+    $vipcode = $_POST['vipcode'];
+    $arr = activate_code($connection, $vipcode);
+
 		make_request_groups($connection, $groups_creator, $groups_experience, $groups_instrument,
-    $groups_genre, $groups_description);
+    $groups_genre, $groups_description, $arr);
 	}
 ?>
 <h2>Кажется Вы хотите найти себе группу... Не вопрос!</h2>
@@ -34,6 +39,6 @@
 </select><br>
 <textarea name="groups_description" cols="43" rows="5" placeholder="Расскажите о себе, нам очень интересно!"></textarea><br>
 <h5>Хотите чтобы Вашу заявку увидели первой? Введите VIP-код!</h5>
-<input type="text" placeholder="Промокод вводить сюда!"><br><br>
+<input type="text" name = "vipcode" placeholder="Промокод вводить сюда!"><br><br>
 <input type = "submit" name = "save" class = "button" value = "Добавить"/>
 </form>

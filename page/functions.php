@@ -2,8 +2,13 @@
 // Создание заявки на поиск музыканта
 function make_request_musicians($connection, $musicians_creator = null, $musicians_experience = null,
 $musicians_instrument = null, $musicians_genre = null, $musicians_description = null, $musicians_name = null,
-$musicians_city = null, $musicians_age = null, $musicians_sex = null)
+$musicians_city = null, $musicians_age = null, $musicians_sex = null, $vipcode = null)
 {
+  $isvip = 0;
+  if ($vipcode['status'] == TRUE )
+  {
+    $isvip = 1;
+  }
   if($musicians_sex == "Мужской"){
     $sex = "man";
   }
@@ -15,22 +20,27 @@ $musicians_city = null, $musicians_age = null, $musicians_sex = null)
 
   if ($musicians_name == null)
     echo 'Введите название группы';
-    else {
-  $query = mysqli_query($connection, "INSERT INTO groups (groups_creator, groups_experience,
-    groups_name, groups_instrument, groups_genre, groups_description, groups_city, groups_age, groups_sex) VALUES
-    ('$musicians_creator', '$musicians_experience', '$musicians_name', '$musicians_instrument', '$musicians_genre',
-      '$musicians_description', '$musicians_city', '$musicians_age', '$sex')");
-  header("Location: ../");
-}
+  else {
+      $query = mysqli_query($connection, "INSERT INTO groups (groups_creator, groups_experience, groups_name,
+        groups_instrument, groups_genre, groups_description, groups_city, groups_age, groups_sex, groups_isvip) VALUES
+        ('$musicians_creator', '$musicians_experience', '$musicians_name', '$musicians_instrument', '$musicians_genre',
+        '$musicians_description', '$musicians_city', '$musicians_age', '$sex', '$isvip')");
+        header("Location: ../");
+  }
 }
 // Создание заявки на поиск группы
 function make_request_groups($connection, $groups_creator = null, $groups_experience = null,
-$groups_instrument = null, $groups_genre = null, $groups_description = null)
+$groups_instrument = null, $groups_genre = null, $groups_description = null, $vipcode = null)
 {
+  $isvip = 0;
+  if ($vipcode['status'] == TRUE )
+  {
+    $isvip = 1;
+  }
   mysqli_query($connection, 'SET foreign_key_checks = 0');
   $query = mysqli_query($connection, "INSERT INTO musicians (musicians_creator, musicians_experience,
-  musicians_instrument, musicians_genre, musicians_description) VALUES('$groups_creator',
-      '$groups_experience', '$groups_instrument', '$groups_genre', '$groups_description')");
+  musicians_instrument, musicians_genre, musicians_description, musicians_isvip) VALUES('$groups_creator',
+      '$groups_experience', '$groups_instrument', '$groups_genre', '$groups_description', '$isvip')");
   header("Location: ../");
 }
 
@@ -756,18 +766,29 @@ function checkisadmin($connection)
   return false;
 }
 
-function accept($connection, $musicians_id = null)
+function acceptm($connection, $musicians_id = null)
 {
   $query = mysqli_query($connection, "UPDATE musicians SET musicians_ismodered = 1
   WHERE musicians_id = '$musicians_id'");
 }
 
-function reject($connection, $musicians_id = null)
+function rejectm($connection, $musicians_id = null)
 {
   $query = mysqli_query($connection, "DELETE FROM musicians WHERE musicians_id = '$musicians_id'");
 }
 
-function admins_requsts_output($connection)
+function acceptg($connection, $groups_id = null)
+{
+  $query = mysqli_query($connection, "UPDATE groups SET groups_ismodered = 1
+  WHERE groups_id = '$groups_id'");
+}
+
+function rejectg($connection, $groups_id = null)
+{
+  $query = mysqli_query($connection, "DELETE FROM groups WHERE groups_id = '$groups_id'");
+}
+
+function admins_requsts_output_mus($connection)
   {
     $query = mysqli_query($connection, "SELECT * FROM musicians
     LEFT OUTER JOIN instruments ON musicians.musicians_instrument = instruments.instruments_id
@@ -801,51 +822,68 @@ function admins_requsts_output($connection)
       echo "<h4>О себе</h4><p>$cat[musicians_description]</p>";
       echo "</div>";
       echo "<form method='post'>
-            <input type = 'submit' name = 'accept-$cat[musicians_id]' value = 'Одобрить'>
-            <input type = 'submit' name = 'reject-$cat[musicians_id]' value = 'Отклонить'>
+            <input type = 'submit' name = 'acceptm-$cat[musicians_id]' value = 'Одобрить'>
+            <input type = 'submit' name = 'rejectm-$cat[musicians_id]' value = 'Отклонить'>
             </form>";
-            if(isset($_POST['accept-'.$cat[musicians_id]]))
+            if(isset($_POST['acceptm-'.$cat[musicians_id]]))
             {
-            accept($connection, $cat[musicians_id]);
+            acceptm($connection, $cat[musicians_id]);
             echo "<meta http-equiv='refresh' content='0'>";
             }
-            if(isset($_POST['reject-'.$cat[musicians_id]]))
+            if(isset($_POST['rejectm-'.$cat[musicians_id]]))
             {
-            reject($connection, $cat[musicians_id]);
+            rejectm($connection, $cat[musicians_id]);
             echo "<meta http-equiv='refresh' content='0'>";
             }
     }
+  }
 
-    // $query = mysqli_query($connection, "SELECT * FROM groups
-    // LEFT OUTER JOIN instruments ON groups.groups_instrument = instruments.instruments_id
-    // LEFT OUTER JOIN users ON groups.groups_creator = users.users_id
-    // LEFT OUTER JOIN genres ON groups.groups_genre = genres.genres_id");
-    // while ($cat = mysqli_fetch_assoc($query))
-    // {
-    //   if($cat["groups_sex"] == "man"){
-    //     $sex = "Мужской";
-    //   }
-    //   if($cat["groups_sex"] == "woman"){
-    //     $sex = "Женский";
-    //   }
-    //   echo "<div class=\"box\">";
-    //   echo "<h2>$cat[groups_name]</h2>";
-    //   echo "<img src='../img/".$cat['instruments_picture']."' />";
-    //   echo "<div class=\"info\">";
-    //   echo "<ul>
-    //     <li>Пол: $sex</li>
-    //     <li>Возраст: $cat[groups_age]</li>
-    //     <li>Инструмент: $cat[instruments_name]</li>
-    //     <li>Опыт: $cat[groups_experience]</li>
-    //     <li>Жанр: $cat[genres_name]</li>
-    //     <li>Город: $cat[groups_city]</li>
-    //   </ul>";
-    //   echo "</div>";
-    //   echo "<div class=\"about\">";
-    //   echo "<h4>О группе</h4><p>$cat[groups_description]</p>";
-    //   echo "</div>";
-    //   // echo "<input type='button' value='Одобрить'>";
-    //     $i++;
-    // }
+  function admins_requsts_output_gr($connection)
+  {
+    $query = mysqli_query($connection, "SELECT * FROM groups
+    LEFT OUTER JOIN instruments ON groups.groups_instrument = instruments.instruments_id
+    LEFT OUTER JOIN users ON groups.groups_creator = users.users_id
+    LEFT OUTER JOIN genres ON groups.groups_genre = genres.genres_id
+    WHERE groups_ismodered = 0");
+    while ($cat = mysqli_fetch_assoc($query))
+    {
+      if($cat["groups_sex"] == "man"){
+        $sex = "Мужской";
+      }
+      else if($cat["groups_sex"] == "woman"){
+        $sex = "Женский";
+      }
+      else $sex = "Любой";
+      echo "<div class=\"box\">";
+      echo "<h2>$cat[groups_name]</h2>";
+      echo "<img src='../img/".$cat['instruments_picture']."' />";
+      echo "<div class=\"info\">";
+      echo "<ul>
+        <li>Пол: $sex</li>
+        <li>Возраст: $cat[groups_age]</li>
+        <li>Инструмент: $cat[instruments_name]</li>
+        <li>Опыт: $cat[groups_experience]</li>
+        <li>Жанр: $cat[genres_name]</li>
+        <li>Город: $cat[groups_city]</li>
+      </ul>";
+      echo "</div>";
+      echo "<div class=\"about\">";
+      echo "<h4>О группе</h4><p>$cat[groups_description]</p>";
+      echo "</div>";
+      echo "<form method='post'>
+            <input type = 'submit' name = 'acceptg-$cat[groups_id]' value = 'Одобрить'>
+            <input type = 'submit' name = 'rejectg-$cat[groups_id]' value = 'Отклонить'>
+            </form>";
+            if(isset($_POST['acceptg-'.$cat[groups_id]]))
+            {
+            acceptg($connection, $cat[groups_id]);
+            echo "<meta http-equiv='refresh' content='0'>";
+            }
+            if(isset($_POST['rejectg-'.$cat[groups_id]]))
+            {
+            rejectg($connection, $cat[groups_id]);
+            echo "<meta http-equiv='refresh' content='0'>";
+            }
+    }
   }
 ?>

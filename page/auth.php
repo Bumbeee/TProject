@@ -1,6 +1,10 @@
 <?php
 require "db.php";
 require "functions.php";
+if(isset($_SESSION["id"])){
+  header("Location: account.php");
+    exit();
+}
 $arr = do_auth($connection, $_POST);
 ?>
 <!DOCTYPE html>

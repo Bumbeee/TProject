@@ -4,7 +4,7 @@ if(checkisadmin($connection)){
     exit();
 }
 if(!isset($_SESSION["id"])){
-  header("Location: ../index.php");
+  header("Location: auth.php");
     exit();
 }
 ?>

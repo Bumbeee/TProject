@@ -95,10 +95,7 @@ function do_auth($connection, $arr){
   		$email = $arr['email'];
   		$password = $arr['password'];
   		$query = mysqli_query($connection, "SELECT * FROM users WHERE users_email = '$email'");
-  		if(mysqli_num_rows($query) == 0){
-  			$message = "Неверный логин или пароль!";
-  		}
-  		else {
+  		if(mysqli_num_rows($query) == 1){
   			$query = mysqli_query($connection, "SELECT users_password FROM users WHERE users_email = '$email' LIMIT 1");
   			$array = mysqli_fetch_array($query);
   			$hash = $array['users_password'];
@@ -111,16 +108,31 @@ function do_auth($connection, $arr){
   				header("Location: ../");
   					exit();
   			}
+      }
+      $query = mysqli_query($connection, "SELECT * FROM admins WHERE admins_email = '$email'");
+      if(mysqli_num_rows($query) == 1){
+  			$query = mysqli_query($connection, "SELECT admins_password FROM admins WHERE admins_email = '$email' LIMIT 1");
+  			$array = mysqli_fetch_array($query);
+  			$hash = $array['admins_password'];
+  			if(password_verify($password, $hash)){
+          $query = mysqli_query($connection, "SELECT admins_id FROM admins WHERE admins_email = '$email' LIMIT 1");
+          $array = mysqli_fetch_array($query);
+          $id = $array['admins_id'];
+  				$_SESSION['logged_user'] = $email;
+          $_SESSION['id'] = $id;
+  				header("Location: ../admin");
+  					exit();
+  			}
+      }
   			else {
   				$message = "Неверный логин или пароль";
   			}
   		}
   	}
-  }
-  return [
-    'message' => $message,
-    'email' => $email,
-];
+    return [
+      'message' => $message,
+      'email' => $email,
+  ];
 }
 // Фильтрация по категории.
 function filter_by($arr, $cat, $value){

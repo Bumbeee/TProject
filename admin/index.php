@@ -1,6 +1,10 @@
 <?php
 require "../page/db.php";
 require "../page/functions.php";
+if(!checkisadmin($connection)){
+  header("Location: ../index.php");
+    exit();
+}
 $arr = get_vips($connection, $_POST);
 ?>
 <!DOCTYPE html>

@@ -77,8 +77,12 @@ function do_register($connection, $arr){
   					$message = "Проблемы при создании аккаунта!";
   				}
   				else{
+            $query = mysqli_query($connection, "SELECT users_id FROM users WHERE users_email = '$email' LIMIT 1");
+      			$array = mysqli_fetch_array($query);
+      			$id = $array['users_id'];
             $_SESSION['logged_user'] = $email;
-  					header("Location: ../");
+            $_SESSION['id'] = $id;
+  					header("Location: account.php");
   					exit();
   				}
   			}
@@ -115,7 +119,7 @@ function do_auth($connection, $arr){
           $id = $array['users_id'];
   				$_SESSION['logged_user'] = $email;
           $_SESSION['id'] = $id;
-  				header("Location: ../");
+  				header("Location: account.php");
   					exit();
   			}
       }

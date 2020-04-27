@@ -783,9 +783,16 @@ function admins_requsts_output($connection)
       echo "<div class=\"about\">";
       echo "<h4>О себе</h4><p>$cat[musicians_description]</p>";
       echo "</div>";
-      echo "<input type= 'button' value = 'Одобрить'
-      onclick = 'accept($connection, $cat[musicians_id]);'>";
+      echo "<form method='post'>
+            <input type = 'submit' name = 'accept-$cat[musicians_id]' value = 'Одобрить'>
+            </form>";
+            if(isset($_POST['accept-'.$cat[musicians_id]]))
+            {
+            accept($connection, $cat[musicians_id]);
+            echo "<meta http-equiv='refresh' content='0'>";
+            }
     }
+
     // $query = mysqli_query($connection, "SELECT * FROM groups
     // LEFT OUTER JOIN instruments ON groups.groups_instrument = instruments.instruments_id
     // LEFT OUTER JOIN users ON groups.groups_creator = users.users_id

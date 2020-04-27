@@ -24,11 +24,14 @@
               </div>
               <div class="register">
                 <ul>
-                <li><a href="../admin">Админ</a></li>
+                  <?php if(checkisadmin($connection))
+                  {
+                  echo '<li><a href="../admin">Админ</a></li>';
+                  } ?>
                   <?php if(isset($_SESSION["id"]))
                   {
-                  echo '<li><a href="account.php">Аккаунт</a></li>';
-                } ?> |
+                  echo '<li><a href="account.php">Аккаунт</a></li> |';
+                } ?>
                   <?php if(isset($_SESSION["id"]))
                   {
                     echo '<li><a href="logout.php">Выход</a></li>';

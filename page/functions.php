@@ -254,7 +254,7 @@ function musicians_by_filter($connection, $arr){
       else if($arr["sex"] == "Женский"){
         $sex = "woman";
       }
-      else $sex = "Любой";
+      //else $sex = "Любой";
       $requests = all_musicians($connection);
       $temp = [];
 
@@ -396,7 +396,7 @@ function groups_by_filter($connection, $arr){
       else if($arr["sex"] == "Женский"){
         $sex = "woman";
       }
-      else $sex = "Любой";
+      //else $sex = "Любой";
       $temp = all_groups($connection);
 
       $temp = filter_by($temp, "groups_city", $arr["city"]);

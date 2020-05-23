@@ -25,6 +25,8 @@ if (isset($_POST['save']))
   make_request_musicians($connection, $musicians_creator, $musicians_experience,
   $musicians_instrument, $musicians_genre, $musicians_description, $musicians_name, $musicians_city,
   $musicians_age, $musicians_sex);
+  header("Location: group.php");
+  exit();
 }
 ?>
 <!DOCTYPE html>

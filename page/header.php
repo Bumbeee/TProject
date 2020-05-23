@@ -27,7 +27,11 @@
                 <ul>
                   <?php if(isset($_SESSION["id"]) && !checkisadmin($connection))
                   {
-                  echo '<li><a href="account.php">Аккаунт |</a></li>';
+                  echo '<li><a href="account.php">Аккаунт </a></li> |';
+                  } ?>
+                  <?php if(checkisadmin($connection))
+                  {
+                  echo '<li><a href="../admin">Админ </a></li> |';
                   } ?>
                   <?php if(isset($_SESSION["id"]))
                   {
@@ -35,7 +39,7 @@
                   }
                   else
                   {
-                  echo '<li><a href="register.php">Регистрация </a></li> /
+                  echo '<li><a href="register.php">Регистрация </a></li> |
                   <li><a href="auth.php">Вход</a></li>';
                   } ?>
                 </ul>

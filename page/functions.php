@@ -578,6 +578,14 @@ function user_request_output($connection, $users_id = null)
       </div>";
     echo "</div>";
     echo "</div>";
+    echo "<form method='post'>
+          <input type = 'submit' name = 'rejectm-$cat[musicians_id]' value = 'Удалить заявку'>
+          </form>";
+          if(isset($_POST['rejectm-'.$cat[musicians_id]]))
+          {
+          rejectm($connection, $cat[musicians_id]);
+          echo "<meta http-equiv='refresh' content='0'>";
+          }
     $i++;
   }
 
@@ -615,6 +623,14 @@ function user_request_output($connection, $users_id = null)
       </div>";
     echo "</div>";
     echo "</div>";
+    echo "<form method='post'>
+          <input type = 'submit' name = 'rejectg-$cat[groups_id]' value = 'Удалить заявку'>
+          </form>";
+          if(isset($_POST['rejectg-'.$cat[groups_id]]))
+          {
+          rejectg($connection, $cat[groups_id]);
+          echo "<meta http-equiv='refresh' content='0'>";
+          }
     $i++;
   }
 }

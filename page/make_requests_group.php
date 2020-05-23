@@ -18,6 +18,8 @@
     $groups_description = $_POST['groups_description'];
     make_request_groups($connection, $groups_creator, $groups_experience, $groups_instrument,
     $groups_genre, $groups_description);
+    header("Location: musician.php");
+    exit();
   }
 ?>
 <!DOCTYPE html>

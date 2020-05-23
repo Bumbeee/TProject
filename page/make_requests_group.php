@@ -11,15 +11,7 @@
   }
   if (isset($_POST['save']))
   {
-    $groups_creator = $_SESSION['id'];
-    $groups_experience = $_POST['groups_experience'];
-    $groups_instrument = $_POST['groups_instrument'];
-    $groups_genre = $_POST['groups_genre'];
-    $groups_description = $_POST['groups_description'];
-    make_request_groups($connection, $groups_creator, $groups_experience, $groups_instrument,
-    $groups_genre, $groups_description);
-    header("Location: musician.php");
-    exit();
+    $arr = make_request_groups($connection, $_POST);
   }
 ?>
 <!DOCTYPE html>
@@ -35,6 +27,13 @@
         <div class="block">
           <h2>Кажется Вы хотите найти себе группу... Не вопрос!</h2>
           <h4>Заполните несколько полей и мы обязательно подберем для Вас группу</h4>
+          <?php
+          if(!empty($arr['message'])){
+          echo  '<div class="error_message">';
+          echo $arr['message'];
+          echo '</div>';
+          }
+        ?>
           <form method = "POST">
           <select name="groups_instrument">
             <option selected="selected" disabled>Инструмент</option>
@@ -51,9 +50,9 @@
             <option selected="selected" disabled>Жанр</option>
               <?php setgenres($connection); ?>
           </select><br>
-          <textarea name="groups_description" cols="43" rows="5" placeholder="Расскажите о себе, нам очень интересно!"></textarea><br>
+          <textarea name="groups_description" cols="43" rows="5" placeholder="Расскажите о себе, нам очень интересно!"><?php echo $arr["description"]?></textarea><br>
           <h5>Хотите чтобы Вашу заявку увидели первой? Введите VIP-код!</h5>
-          <input type="text" placeholder="Промокод вводить сюда!"><br>
+          <input type="text" name="vipcode"placeholder="Промокод вводить сюда!" value="<?php echo $arr['code']?>"><br>
           <input type = "submit" name = "save" class = "button" value = "Добавить"/>
           </form>
         </div>

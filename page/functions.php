@@ -1,47 +1,114 @@
 <?php
 // Создание заявки на поиск музыканта
-function make_request_musicians($connection, $musicians_creator = null, $musicians_experience = null,
-$musicians_instrument = null, $musicians_genre = null, $musicians_description = null, $musicians_name = null,
-$musicians_city = null, $musicians_age = null, $musicians_sex = null, $vipcode = null)
+function make_request_musicians($connection, $arr)
 {
-  $isvip = 0;
-  if ($vipcode['status'] == TRUE )
-  {
-    $isvip = 1;
+  $musicians_creator = $_SESSION['id'];
+  $musicians_experience = $arr['musicians_experience'];
+  $musicians_instrument = $arr['musicians_instrument'];
+  $musicians_genre = $_arr['musicians_genre'];
+  $musicians_description = $arr['musicians_description'];
+  $musicians_name = $arr['musicians_name'];
+  $musicians_city = $arr['musicians_city'];
+  $musicians_age = $arr['musicians_age'];
+  $musicians_sex = $arr['musicians_sex'];
+  if(!isset($arr['musicians_experience']) || !isset($arr['musicians_instrument']) || !isset($arr['musicians_genre'])
+    || !isset($arr['musicians_name']) || !isset($arr['musicians_city']) || !isset($arr['musicians_age'])){
+    $message = "Пожалуйста, заполните все обязательные поля.";
   }
-  if($musicians_sex == "Мужской"){
-    $sex = "man";
-  }
-  else if($musicians_sex == "Женский"){
-    $sex = "woman";
-  }
-  else $sex = "Любой";
-  mysqli_query($connection, 'SET foreign_key_checks = 0');
+  else{
+    if($musicians_sex == "Мужской"){
+      $sex = "man";
+    }
+    else if($musicians_sex == "Женский"){
+      $sex = "woman";
+    }
+    else $sex = "Любой";
 
-  if ($musicians_name == null)
-    echo 'Введите название группы';
-  else {
-      $query = mysqli_query($connection, "INSERT INTO groups (groups_creator, groups_experience, groups_name,
-        groups_instrument, groups_genre, groups_description, groups_city, groups_age, groups_sex, groups_isvip) VALUES
-        ('$musicians_creator', '$musicians_experience', '$musicians_name', '$musicians_instrument', '$musicians_genre',
-        '$musicians_description', '$musicians_city', '$musicians_age', '$sex', '$isvip')");
-        header("Location: ../");
-  }
+    $isvip = 0;
+    if(!empty($arr['vipcode'])){
+      $temp = activate_code($connection, $arr['vipcode']);
+      if ($temp['status'] == TRUE )
+        {
+          $isvip = 1;
+          mysqli_query($connection, 'SET foreign_key_checks = 0');
+          $query = mysqli_query($connection, "INSERT INTO groups (groups_creator, groups_experience, groups_name,
+            groups_instrument, groups_genre, groups_description, groups_city, groups_age, groups_sex, groups_isvip) VALUES
+            ('$musicians_creator', '$musicians_experience', '$musicians_name', '$musicians_instrument', '$musicians_genre',
+            '$musicians_description', '$musicians_city', '$musicians_age', '$sex', '$isvip')");
+         header("Location: musician.php");
+         exit();
+        }
+        else{
+          $message = $temp['message'];
+        }
+      }
+      else{
+        mysqli_query($connection, 'SET foreign_key_checks = 0');
+        $query = mysqli_query($connection, "INSERT INTO groups (groups_creator, groups_experience, groups_name,
+          groups_instrument, groups_genre, groups_description, groups_city, groups_age, groups_sex, groups_isvip) VALUES
+          ('$musicians_creator', '$musicians_experience', '$musicians_name', '$musicians_instrument', '$musicians_genre',
+            '$musicians_description', '$musicians_city', '$musicians_age', '$sex', '$isvip')");
+        header("Location: musician.php");
+        exit();
+      }
+    }
+  return [
+    'message' => $message,
+    'name' => $musicians_name,
+    'city' => $musicians_city,
+    'description' => $musicians_description,
+    'code' => $arr['vipcode'],
+  ];return [
+    'message' => $message,
+    'name' => $musicians_name,
+    'city' => $musicians_city,
+    'description' => $musicians_description,
+    'code' => $arr['vipcode'],
+  ];
 }
 // Создание заявки на поиск группы
-function make_request_groups($connection, $groups_creator = null, $groups_experience = null,
-$groups_instrument = null, $groups_genre = null, $groups_description = null, $vipcode = null)
+function make_request_groups($connection, $arr)
 {
-  $isvip = 0;
-  if ($vipcode['status'] == TRUE )
-  {
-    $isvip = 1;
+  $groups_creator = $_SESSION['id'];
+  $groups_experience = $arr['groups_experience'];
+  $groups_instrument = $arr['groups_instrument'];
+  $groups_genre = $arr['groups_genre'];
+  $groups_description = $arr['groups_description'];
+  if(!isset($arr['groups_experience']) || !isset($arr['groups_instrument']) || !isset($arr['groups_genre'])){
+    $message = "Пожалуйста, заполните все обязательные поля.";
   }
-  mysqli_query($connection, 'SET foreign_key_checks = 0');
-  $query = mysqli_query($connection, "INSERT INTO musicians (musicians_creator, musicians_experience,
-  musicians_instrument, musicians_genre, musicians_description, musicians_isvip) VALUES('$groups_creator',
-      '$groups_experience', '$groups_instrument', '$groups_genre', '$groups_description', '$isvip')");
-  header("Location: ../");
+  else{
+    $isvip = 0;
+    if(!empty($arr['vipcode'])){
+      $temp = activate_code($connection, $_POST['vipcode']);
+      if ($temp['status'] == TRUE )
+        {
+          $isvip = 1;
+          mysqli_query($connection, 'SET foreign_key_checks = 0');
+          $query = mysqli_query($connection, "INSERT INTO musicians (musicians_creator, musicians_experience,
+            musicians_instrument, musicians_genre, musicians_description, musicians_isvip) VALUES('$groups_creator',
+            '$groups_experience', '$groups_instrument', '$groups_genre', '$groups_description', '$isvip')");
+          header("Location: group.php");
+          exit();
+        }
+      else{
+          $message = $temp['message'];
+        }
+      }
+    else{
+      mysqli_query($connection, 'SET foreign_key_checks = 0');
+      $query = mysqli_query($connection, "INSERT INTO musicians (musicians_creator, musicians_experience,
+        musicians_instrument, musicians_genre, musicians_description, musicians_isvip) VALUES('$groups_creator',
+        '$groups_experience', '$groups_instrument', '$groups_genre', '$groups_description', '$isvip')");
+      header("Location: group.php");
+      exit();
+    }
+  }
+  return [
+    'message' => $message,
+    'description' => $groups_description,
+    'code' => $arr['vipcode'],
+  ];
 }
 
 // Регистрация.

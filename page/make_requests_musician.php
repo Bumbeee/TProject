@@ -11,22 +11,7 @@ if(checkisadmin($connection)){
 }
 if (isset($_POST['save']))
 {
-  $musicians_creator = $_SESSION['id'];
-  $musicians_experience = $_POST['musicians_experience'];
-  $musicians_instrument = $_POST['musicians_instrument'];
-  $musicians_genre = $_POST['musicians_genre'];
-  $musicians_description = $_POST['musicians_description'];
-
-  $musicians_name = $_POST['musicians_name'];
-  $musicians_city = $_POST['musicians_city'];
-  $musicians_age = $_POST['musicians_age'];
-  $musicians_sex = $_POST['musicians_sex'];
-
-  make_request_musicians($connection, $musicians_creator, $musicians_experience,
-  $musicians_instrument, $musicians_genre, $musicians_description, $musicians_name, $musicians_city,
-  $musicians_age, $musicians_sex);
-  header("Location: group.php");
-  exit();
+  $arr = make_request_musicians($connection, $_POST);
 }
 ?>
 <!DOCTYPE html>
@@ -42,10 +27,17 @@ if (isset($_POST['save']))
         <div class="block">
           <h2>Ищете музыканта? Тогда Вы по адресу!</h2>
           <h4>Заполните несколько полей и мы обязательно найдем для Вас музыканта</h4>
+          <?php
+          if(!empty($arr['message'])){
+            echo  '<div class="error_message">';
+            echo $arr['message'];
+            echo '</div>';
+          }
+          ?>
           <form method = "POST">
             <div class="info">
-              <input type="text" name="musicians_name" class="form-input" placeholder="Название группы">
-              <input type="text" name="musicians_city"  class="form-input" placeholder="Город"><br>
+              <input type="text" name="musicians_name" class="form-input" required placeholder="Название группы" value="<?php echo $arr['name']?>">
+              <input type="text" name="musicians_city"  class="form-input" reauired placeholder="Город" value="<?php echo $arr['city']?>"><br>
             </div>
 
           <div class="sel_block">
@@ -89,9 +81,9 @@ if (isset($_POST['save']))
             </div>
           </div>
 
-          <textarea name="musicians_description" cols="43" rows="5" placeholder="Расскажите о Вашей группе, нам очень интересно!"></textarea><br>
+          <textarea name="musicians_description" cols="43" rows="5" placeholder="Расскажите о Вашей группе, нам очень интересно!"><?php echo $arr["description"]?></textarea><br>
           <h5>Хотите чтобы Вашу заявку увидели первой? Введите VIP-код!</h5>
-          <input type="text" class="form-input" placeholder="Промокод вводить сюда!"><br>
+          <input type="text" name = "vipcode" class="form-input" placeholder="Промокод вводить сюда!" value="<?php echo $arr['code']?>"><br>
           <input type = "submit" name = "save" value = "Добавить"/>
           </form>
         </div>

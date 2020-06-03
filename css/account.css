@@ -144,6 +144,23 @@ h1{
   list-style-type: none;
 }
 
+.text_block input[type=submit]{
+  border-radius: 50%;
+  outline: none!important;
+  border: 1px black solid;
+  background: 0 0;
+  padding: 1px 8px;
+  font-weight: bold;
+  position: absolute;
+  right: 145px;
+}
+
+.text_block input[type=submit]:hover{
+  background-color: #d14351;
+  color: white;
+  border: 1px #d14351 solid;
+}
+
 .full_box{
   display: flex;
 }

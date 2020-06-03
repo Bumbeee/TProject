@@ -23,8 +23,7 @@ $arr = get_vips($connection, $_POST);
   <div class="col-md-12">
     <div class="row">
       <div class="header">
-        <img src="../img/logo.png" alt="">
-        <a href="../">На главную</a>
+        <a href="../"><img src="../img/logo.png" alt=""></a>
         <h1>Панель администратора</h1>
       </div>
 
@@ -39,8 +38,17 @@ $arr = get_vips($connection, $_POST);
   </div>
 </div>
 
-<?php admins_requsts_output_mus($connection);
- admins_requsts_output_gr($connection);?>
+<div class="container">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="allbox">
+        <?php
+        admins_requsts_output_mus($connection);
+         admins_requsts_output_gr($connection);?>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script src="js/admin.js"></script>
 <script type="text/javascript" src="../libs/jquery/jquery-1.11.1.min.js"></script>

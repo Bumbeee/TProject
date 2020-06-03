@@ -628,6 +628,9 @@ function user_request_output($connection, $users_id = null)
   {
     echo "<div class=\"box\">";
     echo "<div class=\"text_block\">";
+    echo "<form method='post'>
+          <input type = 'submit' name = 'rejectm-$cat[musicians_id]' value = 'х'>
+          </form>";
     echo "<h3>Заявка №$i</h3>";
     echo "<h4>Поиск музыканта</h4>";
     echo "<input type=\"checkbox\" id=\"hd-$i\" class=\"hide\"/>";
@@ -645,10 +648,7 @@ function user_request_output($connection, $users_id = null)
       </div>";
     echo "</div>";
     echo "</div>";
-    echo "<form method='post'>
-          <input type = 'submit' name = 'rejectm-$cat[musicians_id]' value = 'Удалить заявку'>
-          </form>";
-          if(isset($_POST['rejectm-'.$cat[musicians_id]]))
+          if(isset($_POST['rejectm-'.$cat['musicians_id']]))
           {
           rejectm($connection, $cat[musicians_id]);
           echo "<meta http-equiv='refresh' content='0'>";
@@ -670,6 +670,9 @@ function user_request_output($connection, $users_id = null)
       else $sex = "Любой";
     echo "<div class=\"box\">";
     echo "<div class=\"text_block\">";
+    echo "<form method='post'>
+          <input type = 'submit' name = 'rejectg-$cat[groups_id]' value = 'x'>
+          </form>";
     echo "<h3>Заявка №$i</h3>";
     echo "<h4>Поиск группы</h4>";
     echo "<input type=\"checkbox\" id=\"hd-$i\" class=\"hide\"/>";
@@ -690,12 +693,10 @@ function user_request_output($connection, $users_id = null)
       </div>";
     echo "</div>";
     echo "</div>";
-    echo "<form method='post'>
-          <input type = 'submit' name = 'rejectg-$cat[groups_id]' value = 'Удалить заявку'>
-          </form>";
-          if(isset($_POST['rejectg-'.$cat[groups_id]]))
+
+          if(isset($_POST['rejectg-'.$cat['groups_id']]))
           {
-          rejectg($connection, $cat[groups_id]);
+          rejectg($connection, $cat['groups_id']);
           echo "<meta http-equiv='refresh' content='0'>";
           }
     $i++;
@@ -872,7 +873,6 @@ function admins_requsts_output_mus($connection)
       $age = get_age($cat["users_birth_date"]);
       echo "<div class=\"box\">";
       echo "<h2>$cat[users_surname] $cat[users_name]</h2>";
-      echo "<img src='../img/".$cat['instruments_picture']."' />";
       echo "<div class=\"info\">";
       echo "<ul>
         <li>Пол: $sex</li>
@@ -890,16 +890,17 @@ function admins_requsts_output_mus($connection)
             <input type = 'submit' name = 'acceptm-$cat[musicians_id]' value = 'Одобрить'>
             <input type = 'submit' name = 'rejectm-$cat[musicians_id]' value = 'Отклонить'>
             </form>";
-            if(isset($_POST['acceptm-'.$cat[musicians_id]]))
+            if(isset($_POST['acceptm-'.$cat['musicians_id']]))
             {
-            acceptm($connection, $cat[musicians_id]);
+            acceptm($connection, $cat['musicians_id']);
             echo "<meta http-equiv='refresh' content='0'>";
             }
-            if(isset($_POST['rejectm-'.$cat[musicians_id]]))
+            if(isset($_POST['rejectm-'.$cat['musicians_id']]))
             {
-            rejectm($connection, $cat[musicians_id]);
+            rejectm($connection, $cat['musicians_id']);
             echo "<meta http-equiv='refresh' content='0'>";
             }
+            echo "</div>";
     }
   }
 
@@ -921,7 +922,6 @@ function admins_requsts_output_mus($connection)
       else $sex = "Любой";
       echo "<div class=\"box\">";
       echo "<h2>$cat[groups_name]</h2>";
-      echo "<img src='../img/".$cat['instruments_picture']."' />";
       echo "<div class=\"info\">";
       echo "<ul>
         <li>Пол: $sex</li>
@@ -939,16 +939,16 @@ function admins_requsts_output_mus($connection)
             <input type = 'submit' name = 'acceptg-$cat[groups_id]' value = 'Одобрить'>
             <input type = 'submit' name = 'rejectg-$cat[groups_id]' value = 'Отклонить'>
             </form>";
-            if(isset($_POST['acceptg-'.$cat[groups_id]]))
+            if(isset($_POST['acceptg-'.$cat['groups_id']]))
             {
-            acceptg($connection, $cat[groups_id]);
+            acceptg($connection, $cat['groups_id']);
             echo "<meta http-equiv='refresh' content='0'>";
             }
-            if(isset($_POST['rejectg-'.$cat[groups_id]]))
+            if(isset($_POST['rejectg-'.$cat['groups_id']]))
             {
-            rejectg($connection, $cat[groups_id]);
+            rejectg($connection, $cat['groups_id']);
             echo "<meta http-equiv='refresh' content='0'>";
-            }
+            }echo "</div>";
     }
   }
 ?>

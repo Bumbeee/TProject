@@ -27,9 +27,11 @@ if(!isset($_SESSION["id"])){
             <h2>Моя анкета</h2>
             <?php user_data_output($connection, $_SESSION['id']); ?>
           </div>
-          <div class="my-app">
+          <div class="app">
             <h2>Мои заявки</h2>
-            <?php user_request_output($connection, $_SESSION['id']); ?>
+            <div class="my-app">
+              <?php user_request_output($connection, $_SESSION['id']); ?>
+            </div>
           </div>
         </div>
       </div>

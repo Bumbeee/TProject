@@ -628,9 +628,6 @@ function user_request_output($connection, $users_id = null)
   {
     echo "<div class=\"box\">";
     echo "<div class=\"text_block\">";
-    echo "<form method='post'>
-          <input type = 'submit' name = 'rejectm-$cat[musicians_id]' value = 'х'>
-          </form>";
     echo "<h3>Заявка №$i</h3>";
     echo "<h4>Поиск музыканта</h4>";
     echo "<input type=\"checkbox\" id=\"hd-$i\" class=\"hide\"/>";
@@ -646,6 +643,9 @@ function user_request_output($connection, $users_id = null)
           $cat[musicians_description]
         </p>
       </div>";
+      echo "<form method='post'>
+            <input type = 'submit' name = 'rejectm-$cat[musicians_id]' value = 'Удалить'>
+            </form>";
     echo "</div>";
     echo "</div>";
           if(isset($_POST['rejectm-'.$cat['musicians_id']]))
@@ -670,9 +670,6 @@ function user_request_output($connection, $users_id = null)
       else $sex = "Любой";
     echo "<div class=\"box\">";
     echo "<div class=\"text_block\">";
-    echo "<form method='post'>
-          <input type = 'submit' name = 'rejectg-$cat[groups_id]' value = 'x'>
-          </form>";
     echo "<h3>Заявка №$i</h3>";
     echo "<h4>Поиск группы</h4>";
     echo "<input type=\"checkbox\" id=\"hd-$i\" class=\"hide\"/>";
@@ -691,6 +688,9 @@ function user_request_output($connection, $users_id = null)
           $cat[groups_description]
         </p>
       </div>";
+      echo "<form method='post'>
+            <input type = 'submit' name = 'rejectg-$cat[groups_id]' value = 'Удалить'>
+            </form>";
     echo "</div>";
     echo "</div>";
 

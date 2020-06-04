@@ -91,3 +91,13 @@
 .menu a:hover:after,a:focus:after {
   width: 100%;
 }
+
+@media only screen and (max-width : 1000px) {
+	.register ul, .menu ul{
+	  margin: 68px 0 0;
+	}
+	.menu a{
+		padding: 0 5px;
+	}
+
+}

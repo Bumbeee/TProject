@@ -108,7 +108,7 @@ h1{
 }
 
 .box:hover{
-  border: 2px #d14351 solid;
+  border: 0.5px #d14351 solid;
 }
 
 .box img{

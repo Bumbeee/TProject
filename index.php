@@ -12,8 +12,8 @@
         <a href="index.php"><img src="img/logo.png" alt=""></a>
       </div>
       <div class="main">
-        <a href="page/musician.php"><img src="img/mus.jpg" alt=""></a>
-        <a href="page/group.php"><img src="img/group.jpg" alt=""></a>
+        <a href="page/musician.php"><img src="img/music.jpg" alt=""></a>
+        <a href="page/group.php"><img src="img/groups.jpg" alt=""></a>
       </div>
 
 </body>

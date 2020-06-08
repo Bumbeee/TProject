@@ -15,35 +15,24 @@
           <div class="filter">
             <h4>Фильтр</h4>
             <form class="filter" method = "post">
-            <select class="" name="instrument">
-              <option selected="selected"  disabled>Инструмент</option>
-              <?php setinstruments($connection); ?>
+            <select class="select" id="instrument" name="instrument" >
+            	<?php getinstruments($connection, $_POST["instrument"], $_POST["clear"]);?>
             </select>
+
             <select class="" name="sex">
-              <option selected="selected"  disabled>Пол</option>
-              <option>Мужской</option>
-              <option>Женский</option>
+              <?php getsexes($connection, $_POST["sex"], $_POST["clear"]);?>
             </select>
             <select class="" name="experience">
-              <option selected="selected" disabled>Опыт</option>
-              <option>< 1 года</option>
-              <option>1 - 3 года</option>
-              <option>3 - 5 лет</option>
-              <option>> 5 лет</option>
+              <?php getexps($connection, $_POST["experience"], $_POST["clear"]);?>
             </select>
-            <select class="" name="genre">
-              <option selected="selected" disabled>Жанр</option>
-              <?php setgenres($connection); ?>
+            <select class="" id="genre" name="genre">
+              <?php getgenres($connection, $_POST["genre"], $_POST["clear"]); ?>
             </select>
-            <input type="text" name="city" placeholder="Город" value="<?php echo $_POST['city']?>">
+            <input type="text" name="city" placeholder="Город" value="<?php if(!isset($_POST["clear"])) echo $_POST['city'];?>">
             <select class="" name="age">
-              <option selected="selected" disabled>Возраст</option>
-              <option>< 20 лет</option>
-              <option>20 - 30 лет</option>
-              <option>30 - 40 лет</option>
-              <option>40 - 50 лет</option>
-              <option>> 50 лет</option>
+              <?php getages($connection, $_POST["age"], $_POST["clear"]);?>
             </select>
+            <input type="submit" name="clear" value = "Очистить">
             <input type="submit" name="do_filter" value="Найти">
           </div>
   </form>
@@ -56,61 +45,6 @@
       </div>
     </div>
   </div>
-
-
-<!-- Формы для создания заявок -->
-  <!-- <div class="remodal" data-remodal-id="modal_mus">
-    <button data-remodal-action="close" class="remodal-close"></button>
-    <form class="order_form" action="index.html" method="post">
-      <h2>Ищете музыканта? Тогда Вы по адресу!</h2>
-      <h4>Заполните несколько полей и мы обязательно найдем для Вас музыканта</h4>
-      <label for="#name">Название группы</label>
-      <input type="text" id="name" name="" value=""><br>
-      <select class="">
-        <option selected="selected" disabled>Инструмент</option>
-      </select>
-      <select class="">
-        <option selected="selected" disabled>Опыт</option>
-        <option>< 1 года</option>
-        <option>1 - 3 года</option>
-        <option>3 - 5 лет</option>
-        <option>> 5 лет</option>
-      </select>
-      <select class="">
-        <option selected="selected" disabled>Жанр</option>
-      </select><br>
-      <textarea name="" cols="43" rows="5" placeholder="Расскажите о Вашей группе, нам очень интересно!"></textarea><br>
-      <h5>Хотите чтобы Вашу заявку увидели первой? Введите VIP-код!</h5>
-      <input type="text" placeholder="Промокод вводить сюда!"><br><br>
-      <button data-remodal-action="confirm" class="remodal-confirm" id="mus_find">Найти</button>
-    </form>
-</div>
-
-<div class="remodal" data-remodal-id="modal_group">
-  <button data-remodal-action="close" class="remodal-close"></button>
-  <form class="order_form" action="index.html" method="post">
-    <h2>Кажется Вы хотите найти себе группу... Не вопрос!</h2>
-    <h4>Заполните несколько полей и мы обязательно подберем для Вас группу</h4>
-    <select class="instrument">
-      <option selected="selected" disabled>Инструмент</option>
-    </select>
-    <select class="experience">
-      <option selected="selected" disabled>Опыт</option>
-      <option>< 1 года</option>
-      <option>1 - 3 года</option>
-      <option>3 - 5 лет</option>
-      <option>> 5 лет</option>
-    </select>
-    <select class="genre">
-      <option selected="selected" disabled>Жанр</option>
-    </select><br>
-    <textarea name="" cols="43" rows="5" class="about_you" placeholder="Расскажите о себе, нам очень интересно!"></textarea><br>
-    <h5>Хотите чтобы Вашу заявку увидели первой? Введите VIP-код!</h5>
-    <input type="text" class="vipcode" placeholder="Промокод вводить сюда!"><br><br>
-    <button data-remodal-action="confirm" class="remodal-confirm" id="gr_find">Найти</button>
-  </form>
-</div> -->
-
 <!-- Подключение JS -->
     <script type="text/javascript" src="../js/main.js"></script>
     <script type="text/javascript" src="../libs/jquery/jquery-1.11.1.min.js"></script>

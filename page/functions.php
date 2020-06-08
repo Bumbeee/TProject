@@ -216,8 +216,8 @@ function do_auth($connection, $arr){
   ];
 }
 // Фильтрация по категории.
-function filter_by($arr, $cat, $value){
-  if($value != ""){
+function filter_by($arr, $cat, $value, $zero_key){
+  if($value != "" && $value != $zero_key){
     $res = [];
     foreach($arr as &$item){
       if(mb_strtoupper($item["$cat"]) == mb_strtoupper($value)){
@@ -285,6 +285,9 @@ function print_musicians_requests($requests){
   }
 }
 }
+else{
+  echo "По вашему запросу ничего не найдено";
+}
 }
 // Массив всех заявок музыкантов.
 function all_musicians($connection){
@@ -330,14 +333,14 @@ function musicians_by_filter($connection, $arr){
       $temp = [];
 
 
-      $temp = filter_by($requests, "users_city", $arr["city"]);
-      $temp = filter_by($temp, "users_sex", $sex);
-      $temp = filter_by($temp, "instruments_id", $arr["instrument"]);
-      $temp = filter_by($temp, "genres_id", $arr["genre"]);
-      $temp = filter_by($temp, "musicians_experience", $arr["experience"]);
+      $temp = filter_by($requests, "users_city", $arr["city"], "Любой");
+      $temp = filter_by($temp, "users_sex", $sex, "Пол");
+      $temp = filter_by($temp, "instruments_id", $arr["instrument"], "0");
+      $temp = filter_by($temp, "genres_id", $arr["genre"], "0");
+      $temp = filter_by($temp, "musicians_experience", $arr["experience"], "Опыт");
       $res = $temp;
       $temp = [];
-      if(!empty($arr["age"])){
+      if(!empty($arr["age"]) && $arr["age"] != "Возраст"){
          foreach($res as &$item){
             if(($arr["age"] == "< 20 лет" && get_age($item["users_birth_date"]) < 20)
             || ($arr["age"] == "20 - 30 лет" && get_age($item["users_birth_date"]) >= 20 && get_age($item["users_birth_date"]) < 30)
@@ -402,7 +405,11 @@ function print_groups_requests($requests){
   }
 }
 }
+  else{
+    echo "По вашему запросу ничего не найдено";
+  }
 }
+
 
 
 
@@ -448,12 +455,12 @@ function groups_by_filter($connection, $arr){
       //else $sex = "Любой";
       $temp = all_groups($connection);
 
-      $temp = filter_by($temp, "groups_city", $arr["city"]);
-      $temp = filter_by($temp, "groups_sex", $sex);
-      $temp = filter_by($temp, "instruments_id", $arr["instrument"]);
-      $temp = filter_by($temp, "genres_id", $arr["genre"]);
-      $temp = filter_by($temp, "groups_experience", $arr["experience"]);
-      $temp = filter_by($temp, "groups_age", $arr["age"]);
+      $temp = filter_by($temp, "groups_city", $arr["city"], "Любой");
+      $temp = filter_by($temp, "groups_sex", $sex, "Пол");
+      $temp = filter_by($temp, "instruments_id", $arr["instrument"], "0");
+      $temp = filter_by($temp, "genres_id", $arr["genre"], "0");
+      $temp = filter_by($temp, "groups_experience", $arr["experience"], "Опыт");
+      $temp = filter_by($temp, "groups_age", $arr["age"], "Возраст");
       $res = $temp;
      }
    }
@@ -703,7 +710,7 @@ function user_request_output($connection, $users_id = null)
   }
 }
 
-function setinstruments($connection, $instruments_id = null, $instruments_name = null)
+/*function setinstruments($connection, $instruments_id = null, $instruments_name = null)
   {
     $query = mysqli_query($connection, "SELECT * FROM instruments");
     while ($cat = mysqli_fetch_assoc($query))
@@ -718,6 +725,99 @@ function setgenres($connection, $genres_id = null, $genres_name = null)
     while ($cat = mysqli_fetch_assoc($query))
     {
     echo "<option value='".$cat['genres_id']."'>".$cat['genres_name']."</option>";
+  }
+}*/
+function getinstruments($connection, $instrument, $clear){
+  $query = mysqli_query($connection, "SELECT * FROM instruments");
+  if(isset($clear)){
+    $instrument = null;
+  }
+  echo '<option selected = "selected" value = "0">';
+  echo "Инструмент";
+  echo '</option>';
+  while($row = mysqli_fetch_assoc($query)){
+    if($row["instruments_id"] == $instrument){
+      echo "<option selected =\"selected\" value='".$row['instruments_id']."'>".$row['instruments_name']."</option>";
+    }
+    else{
+      echo "<option value='".$row['instruments_id']."'>".$row['instruments_name']."</option>";
+    }
+  }
+}
+function getsexes($coonection, $sex, $clear){
+  if(isset($clear)){
+    $sex = null;
+  }
+  $sexes = array(
+     1 => "Пол",
+     2 => "Мужской",
+     3 => "Женский"
+   );
+   foreach($sexes as &$item){
+     if($sex == $item){
+       echo "<option selected = \"selected\">".$item."</option>";
+     }
+     else {
+       echo "<option>".$item."</option>";
+   }
+  }
+}
+function getgenres($connection, $genre, $clear){
+  $query = mysqli_query($connection, "SELECT * FROM genres");
+  if(isset($clear)){
+    $genre = null;
+  }
+  echo '<option selected = "selected" value = "0">';
+  echo "Жанр";
+  echo '</option>';
+  while($row = mysqli_fetch_assoc($query)){
+    if($row["genres_id"] == $genre){
+      echo "<option selected =\"selected\" value='".$row['genres_id']."'>".$row['genres_name']."</option>";
+    }
+    else{
+      echo "<option value='".$row['genres_id']."'>".$row['genres_name']."</option>";
+    }
+  }
+}
+function getexps($connection, $exp, $clear){
+  if(isset($clear)){
+    $exp = null;
+  }
+  $exps = array(
+    1 => "Опыт",
+    2 => "< 1 года",
+    3 => "1 - 3 года",
+    4 => "3 - 5 лет",
+    5 => "> 5 лет"
+  );
+  foreach($exps as &$item){
+    if($exp == $item){
+      echo "<option selected = \"selected\">".$item."</option>";
+    }
+    else {
+      echo "<option>".$item."</option>";
+    }
+  }
+}
+function getages($connection, $age, $clear){
+  if(isset($clear)){
+    $age = null;
+  }
+ $ages = array(
+    1 => "Возраст",
+    2 => "< 20 лет",
+    3 => "20 - 30 лет",
+    4 => "30 - 40 лет",
+    5 => "40 - 50 лет",
+    6 => "> 50 лет"
+  );
+  foreach($ages as &$item){
+    if($age == $item){
+      echo "<option selected = \"selected\">".$item."</option>";
+    }
+    else {
+      echo "<option>".$item."</option>";
+    }
   }
 }
 
@@ -863,6 +963,7 @@ function admins_requsts_output_mus($connection)
     WHERE musicians_ismodered = 0");
     while ($cat = mysqli_fetch_assoc($query))
     {
+      $mail = $cat["users_email"];
       if($cat["users_sex"] == "man"){
         $sex = "Мужской";
       }
@@ -886,21 +987,34 @@ function admins_requsts_output_mus($connection)
       echo "<div class=\"about\">";
       echo "<h4>О себе</h4><p>$cat[musicians_description]</p>";
       echo "</div>";
-      echo "<form method='post'>
+      echo "<form class = \"\" method='post'>
             <input type = 'submit' name = 'acceptm-$cat[musicians_id]' value = 'Одобрить'>
             <input type = 'submit' name = 'rejectm-$cat[musicians_id]' value = 'Отклонить'>
+            <select  name=\"reason\">
+              <option>Некорректные данные</option>
+              <option>Нецензурные выражения</option>
+              <option>Оскорбления</option>
+              <option>Спам</option>
+            </select>
             </form>";
             if(isset($_POST['acceptm-'.$cat['musicians_id']]))
             {
-            acceptm($connection, $cat['musicians_id']);
-            echo "<meta http-equiv='refresh' content='0'>";
+              $recepient = $mail;
+              $text = "Ваша заявка на поиск группы с сайта Believe была одобрена! Спасибо, что вы с нами!";
+              $pagetitle = "Ответ на заявку на сайте Believe";
+              mail($recepient, $pagetitle, $text, "From: believe@gmail.com");
+              acceptm($connection, $cat['musicians_id']);
+              echo "<meta http-equiv='refresh' content='0'>";
             }
-            if(isset($_POST['rejectm-'.$cat['musicians_id']]))
+            if(isset($_POST['rejectg-'.$cat['musicians_id']]))
             {
-            rejectm($connection, $cat['musicians_id']);
-            echo "<meta http-equiv='refresh' content='0'>";
-            }
-            echo "</div>";
+              $recepient = $mail;
+              $text = "Ваша заявка на поиск группы с сайта Believe была отклонена! Причина: ".$_POST["reason"]."." ;
+              $pagetitle = "Ответ на заявку на сайте Believe";
+              mail($recepient, $pagetitle, $text, "From: believe@gmail.com");
+              rejectm($connection, $cat['musicians_id']);
+              echo "<meta http-equiv='refresh' content='0'>";
+            }echo "</div>";
     }
   }
 
@@ -913,6 +1027,7 @@ function admins_requsts_output_mus($connection)
     WHERE groups_ismodered = 0");
     while ($cat = mysqli_fetch_assoc($query))
     {
+      $mail = $cat["users_email"];
       if($cat["groups_sex"] == "man"){
         $sex = "Мужской";
       }
@@ -920,7 +1035,7 @@ function admins_requsts_output_mus($connection)
         $sex = "Женский";
       }
       else $sex = "Любой";
-      echo "<div class=\"box\">";
+      echo "<div class=\"box\" value=\"$mail\">";
       echo "<h2>$cat[groups_name]</h2>";
       echo "<div class=\"info\">";
       echo "<ul>
@@ -930,24 +1045,39 @@ function admins_requsts_output_mus($connection)
         <li>Опыт: $cat[groups_experience]</li>
         <li>Жанр: $cat[genres_name]</li>
         <li>Город: $cat[groups_city]</li>
+        <li>Почта: $cat[users_email];
       </ul>";
       echo "</div>";
       echo "<div class=\"about\">";
       echo "<h4>О группе</h4><p>$cat[groups_description]</p>";
       echo "</div>";
-      echo "<form method='post'>
+      echo "<form class = \"\" method='post'>
             <input type = 'submit' name = 'acceptg-$cat[groups_id]' value = 'Одобрить'>
             <input type = 'submit' name = 'rejectg-$cat[groups_id]' value = 'Отклонить'>
+            <select  name=\"reason\">
+              <option>Некорректные данные</option>
+              <option>Нецензурные выражения</option>
+              <option>Оскорбления</option>
+              <option>Спам</option>
+            </select>
             </form>";
             if(isset($_POST['acceptg-'.$cat['groups_id']]))
             {
-            acceptg($connection, $cat['groups_id']);
-            echo "<meta http-equiv='refresh' content='0'>";
+              $recepient = $mail;
+              $text = "Ваша заявка на поиск музыканта с сайта Believe была одобрена! Спасибо, что вы с нами!";
+              $pagetitle = "Ответ на заявку на сайте Believe";
+              mail($recepient, $pagetitle, $text, "From: believe@gmail.com");
+              acceptg($connection, $cat['groups_id']);
+              echo "<meta http-equiv='refresh' content='0'>";
             }
             if(isset($_POST['rejectg-'.$cat['groups_id']]))
             {
-            rejectg($connection, $cat['groups_id']);
-            echo "<meta http-equiv='refresh' content='0'>";
+              $recepient = $mail;
+              $text = "Ваша заявка на поиск музыканта с сайта Believe была отклонена! Причина: ".$_POST["reason"]."." ;
+              $pagetitle = "Ответ на заявку на сайте Believe";
+              mail($recepient, $pagetitle, $text, "From: believe@gmail.com");
+              rejectg($connection, $cat['groups_id']);
+              echo "<meta http-equiv='refresh' content='0'>";
             }echo "</div>";
     }
   }

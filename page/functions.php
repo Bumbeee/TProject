@@ -623,6 +623,28 @@ function musicians_request_output($connection)
     }
 }
 
+function totopm($connection, $musicians_id = null, $code = null)
+{
+    $temp = activate_code($connection, $code);
+    if ($temp['status'] == TRUE )
+      {
+        mysqli_query($connection, 'SET foreign_key_checks = 0');
+        $query = mysqli_query($connection, "UPDATE musicians SET musicians_isvip = 1
+        WHERE musicians_id = '$musicians_id'");
+      }
+}
+
+function totopg($connection, $groups_id = null, $code = null)
+{
+    $temp = activate_code($connection, $code);
+    if ($temp['status'] == TRUE )
+      {
+        mysqli_query($connection, 'SET foreign_key_checks = 0');
+        $query = mysqli_query($connection, "UPDATE groups SET groups_isvip = 1
+        WHERE groups_id = '$groups_id'");
+      }
+}
+
 function user_request_output($connection, $users_id = null)
 {
   $query = mysqli_query($connection, "SELECT * FROM musicians
@@ -636,6 +658,9 @@ function user_request_output($connection, $users_id = null)
     echo "<div class=\"box\">";
     echo "<div class=\"text_block\">";
     echo "<h3>Заявка №$i</h3>";
+    if ($cat[musicians_ismodered] == TRUE)
+      echo "<h4 class = 'apply'>Одобрена</h4>";
+    else echo "<h4 class = 'checking'>На рассмотрении</h4>";
     echo "<h4>Поиск музыканта</h4>";
     echo "<input type=\"checkbox\" id=\"hd-$i\" class=\"hide\"/>";
     echo "<label for=\"hd-$i\" >Подробнее</label>
@@ -648,9 +673,16 @@ function user_request_output($connection, $users_id = null)
         </ul>
         <p><h4>О себе</h4>
           $cat[musicians_description]
-        </p>
-      </div>";
-      echo "<form method='post'>
+        </p>";
+        if ($cat[musicians_isvip] == FALSE)
+        {
+        echo "<form method='post'>
+          <input type='text' name='vipcodem' placeholder='Промокод вводить сюда!'><br>
+          <input type = 'submit' name = 'totop-$cat[musicians_id]' value = 'В топ'>
+        </form>";
+        }
+      echo "</div>";
+    echo "<form method='post'>
             <input type = 'submit' name = 'rejectm-$cat[musicians_id]' value = 'Удалить'>
             </form>";
     echo "</div>";
@@ -658,6 +690,11 @@ function user_request_output($connection, $users_id = null)
           if(isset($_POST['rejectm-'.$cat['musicians_id']]))
           {
           rejectm($connection, $cat[musicians_id]);
+          echo "<meta http-equiv='refresh' content='0'>";
+          }
+          if(isset($_POST['totop-'.$cat['musicians_id']]))
+          {
+          totopm($connection, $cat[musicians_id], $_POST['vipcodem']);
           echo "<meta http-equiv='refresh' content='0'>";
           }
     $i++;
@@ -678,6 +715,9 @@ function user_request_output($connection, $users_id = null)
     echo "<div class=\"box\">";
     echo "<div class=\"text_block\">";
     echo "<h3>Заявка №$i</h3>";
+    if ($cat[musicians_ismodered] == TRUE)
+      echo "<h4 class = 'apply'>Одобрена</h4>";
+    else echo "<h4 class = 'checking'>На рассмотрении</h4>";
     echo "<h4>Поиск группы</h4>";
     echo "<input type=\"checkbox\" id=\"hd-$i\" class=\"hide\"/>";
     echo "<label for=\"hd-$i\" >Подробнее</label>
@@ -693,17 +733,28 @@ function user_request_output($connection, $users_id = null)
         </ul>
         <p><h4>Описание группы</h4>
           $cat[groups_description]
-        </p>
-      </div>";
+        </p>";
+        if ($cat[groups_isvip] == FALSE)
+        {
+        echo "<form method='post'>
+          <input type='text' name='vipcodeg' placeholder='Промокод вводить сюда!'><br>
+          <input type = 'submit' name = 'totop-$cat[groups_id]' value = 'В топ'>
+          </form>";
+        }
+      echo "</div>";
       echo "<form method='post'>
             <input type = 'submit' name = 'rejectg-$cat[groups_id]' value = 'Удалить'>
             </form>";
     echo "</div>";
     echo "</div>";
-
           if(isset($_POST['rejectg-'.$cat['groups_id']]))
           {
           rejectg($connection, $cat['groups_id']);
+          echo "<meta http-equiv='refresh' content='0'>";
+          }
+          if(isset($_POST['totop-'.$cat['groups_id']]))
+          {
+          totopg($connection, $cat[groups_id], $_POST['vipcodeg']);
           echo "<meta http-equiv='refresh' content='0'>";
           }
     $i++;

@@ -44,13 +44,14 @@ $arr = get_vips($connection, $_POST);
       <div class="allbox">
         <?php
         admins_requsts_output_mus($connection);
-         admins_requsts_output_gr($connection);?>
+        admins_requsts_output_gr($connection);?>
       </div>
     </div>
   </div>
 </div>
 
-<script src="js/admin.js"></script>
+
 <script type="text/javascript" src="../libs/jquery/jquery-1.11.1.min.js"></script>
 <script src="../libs/remodal/remodal.min.js"></script>
+<script src="js/admin.js"></script>
 </body>

@@ -761,7 +761,7 @@ function user_request_output($connection, $users_id = null)
   }
 }
 
-/*function setinstruments($connection, $instruments_id = null, $instruments_name = null)
+function setinstruments($connection, $instruments_id = null, $instruments_name = null)
   {
     $query = mysqli_query($connection, "SELECT * FROM instruments");
     while ($cat = mysqli_fetch_assoc($query))
@@ -777,7 +777,8 @@ function setgenres($connection, $genres_id = null, $genres_name = null)
     {
     echo "<option value='".$cat['genres_id']."'>".$cat['genres_name']."</option>";
   }
-}*/
+}
+
 function getinstruments($connection, $instrument, $clear){
   $query = mysqli_query($connection, "SELECT * FROM instruments");
   if(isset($clear)){

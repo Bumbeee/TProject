@@ -1,6 +1,6 @@
 .all_filter{
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   flex-wrap: wrap;
   margin: 25px 0;
   font-family: 'Proxima Nova Regular';
@@ -36,7 +36,7 @@
 }
 
 .filter input[type=submit]{
-  margin-left: 15px;
+  margin-left: 5px;
   border: 1px #175fa8 solid;
   background-color: #175fa8;
   color: white;
@@ -53,6 +53,7 @@
 
 .order h4{
   margin-block-end: 16px;
+  margin-top: 10px;
 }
 
 .order a{

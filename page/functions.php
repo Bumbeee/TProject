@@ -658,7 +658,7 @@ function user_request_output($connection, $users_id = null)
     echo "<div class=\"box\">";
     echo "<div class=\"text_block\">";
     echo "<h3>Заявка №$i</h3>";
-    if ($cat[musicians_ismodered] == TRUE)
+    if ($cat['musicians_ismodered'] == TRUE)
       echo "<h4 class = 'apply'>Одобрена</h4>";
     else echo "<h4 class = 'checking'>На рассмотрении</h4>";
     echo "<h4>Поиск музыканта</h4>";
@@ -674,10 +674,10 @@ function user_request_output($connection, $users_id = null)
         <p><h4>О себе</h4>
           $cat[musicians_description]
         </p>";
-        if ($cat[musicians_isvip] == FALSE)
+        if ($cat['musicians_isvip'] == FALSE)
         {
-        echo "<form method='post'>
-          <input type='text' name='vipcodem' placeholder='Промокод вводить сюда!'><br>
+        echo "<form method='post' class='vipacc'>
+          <input type='text' name='vipcodem' placeholder='Промокод вводить сюда!'>
           <input type = 'submit' name = 'totop-$cat[musicians_id]' value = 'В топ'>
         </form>";
         }
@@ -689,12 +689,12 @@ function user_request_output($connection, $users_id = null)
     echo "</div>";
           if(isset($_POST['rejectm-'.$cat['musicians_id']]))
           {
-          rejectm($connection, $cat[musicians_id]);
+          rejectm($connection, $cat['musicians_id']);
           echo "<meta http-equiv='refresh' content='0'>";
           }
           if(isset($_POST['totop-'.$cat['musicians_id']]))
           {
-          totopm($connection, $cat[musicians_id], $_POST['vipcodem']);
+          totopm($connection, $cat['musicians_id'], $_POST['vipcodem']);
           echo "<meta http-equiv='refresh' content='0'>";
           }
     $i++;
@@ -715,7 +715,7 @@ function user_request_output($connection, $users_id = null)
     echo "<div class=\"box\">";
     echo "<div class=\"text_block\">";
     echo "<h3>Заявка №$i</h3>";
-    if ($cat[musicians_ismodered] == TRUE)
+    if ($cat['musicians_ismodered'] == TRUE)
       echo "<h4 class = 'apply'>Одобрена</h4>";
     else echo "<h4 class = 'checking'>На рассмотрении</h4>";
     echo "<h4>Поиск группы</h4>";
@@ -734,10 +734,10 @@ function user_request_output($connection, $users_id = null)
         <p><h4>Описание группы</h4>
           $cat[groups_description]
         </p>";
-        if ($cat[groups_isvip] == FALSE)
+        if ($cat['groups_isvip'] == FALSE)
         {
-        echo "<form method='post'>
-          <input type='text' name='vipcodeg' placeholder='Промокод вводить сюда!'><br>
+        echo "<form method='post' class='vipacc'>
+          <input type='text' name='vipcodeg' placeholder='Промокод вводить сюда!'>
           <input type = 'submit' name = 'totop-$cat[groups_id]' value = 'В топ'>
           </form>";
         }
@@ -754,7 +754,7 @@ function user_request_output($connection, $users_id = null)
           }
           if(isset($_POST['totop-'.$cat['groups_id']]))
           {
-          totopg($connection, $cat[groups_id], $_POST['vipcodeg']);
+          totopg($connection, $cat['groups_id'], $_POST['vipcodeg']);
           echo "<meta http-equiv='refresh' content='0'>";
           }
     $i++;

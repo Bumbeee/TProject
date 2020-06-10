@@ -18,4 +18,4 @@
 •	[Презентация](https://github.com/Bumbeee/TProject/blob/master/documents/Презентация%20Believe.pptx) <br>
 •	[Демо-Видео проекта](https://yadi.sk/i/_zPy1IwupAXMKw) <br>
 # Сайт
-•	Адрес: [f0432895.xsph.ru](f0432895.xsph.ru)<br>
+•	Адрес: [f0432895.xsph.ru](http://f0432895.xsph.ru/)<br>

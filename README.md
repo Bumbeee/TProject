@@ -17,5 +17,6 @@
 •	[Swagger](https://app.swaggerhub.com/apis/Varekai133/Believe/2.0) <br>
 •	[Презентация](https://github.com/Bumbeee/TProject/blob/master/documents/Презентация%20Believe.pptx) <br>
 •	[Демо-Видео проекта](https://yadi.sk/i/_zPy1IwupAXMKw) <br>
+•	[Метрика](https://metrika.yandex.ru/dashboard?id=64751707) <br>
 # Сайт
 •	Адрес: [f0432895.xsph.ru](http://f0432895.xsph.ru/)<br>
